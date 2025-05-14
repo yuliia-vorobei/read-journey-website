@@ -1,0 +1,53 @@
+:root {
+  --main-bg-color: #141414;
+  --main-font-color: #f9f9f9;
+  --secondary-font-color: #686868;
+  --third-font-color: #e3e3e3 / 30%;
+  --fourth-font-color: #262626;
+  --fifth-font-color: #1f1f1f;
+  --decorative-blue-color: #4f92f7;
+  --decorative-green-color: #30b94d;
+}
+
+@font-face {
+  font-family: "GilroyMedium";
+  src: url("./assets/fonts/gilroy-medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GilroyBold";
+  src: url("./assets/fonts/gilroy-bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SfProTextSemibold";
+  src: url("./assets/fonts/sf-pro-text-semibold.otf") format("opentype");
+}
+
+/* src/index.css */
+
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
