@@ -1,0 +1,41 @@
+.imageContainer {
+  min-width: 327px;
+  height: 351px;
+  border-radius: 30px;
+  background: var(--fifth-font-color);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@media screen and (min-width: 375px) {
+  .imageContainer {
+    width: 335px;
+    height: 351px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .imageContainer {
+    visibility: hidden;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .imageContainer {
+    visibility: visible;
+    width: 600px;
+    min-height: 736px;
+    /* height: auto; */
+  }
+}
+
+.image {
+  width: 255px;
+}
+
+@media screen and (min-width: 1440px) {
+  .image {
+    width: 405px;
+  }
+}

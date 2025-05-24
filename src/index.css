@@ -7,6 +7,7 @@
   --fifth-font-color: #1f1f1f;
   --decorative-blue-color: #4f92f7;
   --decorative-green-color: #30b94d;
+  --error-message-color: #ee3535;
 }
 
 @font-face {
@@ -24,11 +25,11 @@
   src: url("./assets/fonts/sf-pro-text-semibold.otf") format("opentype");
 }
 
-/* src/index.css */
-
 body {
-  font-family: sans-serif;
+  font-family: "GilroyMedium", sans-serif;
+  background-color: var(--main-bg-color);
   line-height: 1.5;
+  margin: 20px;
 }
 
 h1,
