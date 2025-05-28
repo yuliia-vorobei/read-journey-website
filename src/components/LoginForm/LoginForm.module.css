@@ -20,6 +20,10 @@
   align-items: center;
 }
 
+.formContainer .fieldContainer:last-child {
+  position: relative;
+}
+
 @media screen and (min-width: 768px) {
   .fieldContainer {
     height: 50px;
@@ -123,4 +127,28 @@
   border-color: transparent;
   padding: 0;
   cursor: pointer;
+}
+
+.iconButton {
+  position: absolute;
+  right: 16px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--main-font-color);
+  fill: none;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .iconButton {
+    right: 18px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
 }

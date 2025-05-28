@@ -1,8 +1,11 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
-import { useId } from "react";
+import { useId, useState } from "react";
 import css from "./RegistrationForm.module.css";
 import { useNavigate } from "react-router-dom";
+import Icon from "../Icon/Icon.jsx";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/operations.js";
 
 const RegistrationSchema = Yup.object().shape({
   name: Yup.string()
@@ -26,14 +29,21 @@ const initialValues = {
 };
 
 export const RegistrationForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+  const togglePassword = () => {
+    setVisible(!visible);
+  };
+
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
+    dispatch(register(values));
     actions.resetForm();
+    navigate("/recommended");
   };
 
   return (
@@ -42,7 +52,7 @@ export const RegistrationForm = () => {
       onSubmit={handleSubmit}
       validationSchema={RegistrationSchema}
     >
-      <Form>
+      <Form autoComplete="off">
         <div className={css.formContainer}>
           <label htmlFor={nameFieldId} className={css.fieldContainer}>
             <span className={css.label}>Name:</span>
@@ -52,6 +62,7 @@ export const RegistrationForm = () => {
               className={css.field}
               id={nameFieldId}
               placeholder="Yuliia Vorobei"
+              autoComplete="off"
             />
             <ErrorMessage
               name="name"
@@ -63,8 +74,10 @@ export const RegistrationForm = () => {
           <label htmlFor={emailFieldId} className={css.fieldContainer}>
             <span className={css.label}>Mail:</span>
             <Field
+              autoComplete="new-password"
               type="email"
               name="email"
+              autoFill="off"
               className={css.field}
               id={emailFieldId}
               placeholder="Your@email.com"
@@ -79,7 +92,8 @@ export const RegistrationForm = () => {
           <label htmlFor={passwordFieldId} className={css.fieldContainer}>
             <span className={css.label}>Password:</span>
             <Field
-              type="password"
+              type={visible ? "text" : "password"}
+              autoComplete="off"
               name="password"
               className={css.field}
               id={passwordFieldId}
@@ -90,13 +104,24 @@ export const RegistrationForm = () => {
               component="span"
               className={css.errorMsg}
             />
+            <span onClick={togglePassword} className={css.iconButton}>
+              {visible ? (
+                <Icon id="icon-eye-off" className={css.icon} />
+              ) : (
+                <Icon id="icon-eye" className={css.icon} />
+              )}
+            </span>
           </label>
         </div>
         <div className={css.buttonContainer}>
           <button type="submit" className={css.button}>
             Registration
           </button>
-          <button className={css.accountBtn} onClick={() => navigate("/login")}>
+          <button
+            type="button"
+            className={css.accountBtn}
+            onClick={() => navigate("/login")}
+          >
             Already have an account?
           </button>
         </div>

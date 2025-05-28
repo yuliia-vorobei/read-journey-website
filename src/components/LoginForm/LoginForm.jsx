@@ -1,32 +1,42 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
-import { useId } from "react";
+import { useId, useState } from "react";
 import css from "./LoginForm.module.css";
 import { useNavigate } from "react-router-dom";
+import Icon from "../Icon/Icon";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/auth/operations.js";
 
 const initialValues = {
-  name: "",
   email: "",
   password: "",
 };
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const emailFieldId = useId();
   const passwordFieldId = useId();
+  const [visible, setVisible] = useState(false);
+  const togglePassword = () => {
+    setVisible(!visible);
+  };
 
   const handleSubmit = (values, actions) => {
+    dispatch(login(values));
     actions.resetForm();
+    navigate("/recommended");
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <Form>
+      <Form autoComplete="off">
         <div className={css.formContainer}>
           <label htmlFor={emailFieldId} className={css.fieldContainer}>
             <span className={css.label}>Mail:</span>
             <Field
               type="email"
               name="email"
+              autoComplete="off"
               className={css.field}
               id={emailFieldId}
               placeholder="Your@email.com"
@@ -41,17 +51,25 @@ export const LoginForm = () => {
           <label htmlFor={passwordFieldId} className={css.fieldContainer}>
             <span className={css.label}>Password:</span>
             <Field
-              type="password"
+              type={visible ? "text" : "password"}
               name="password"
               className={css.field}
               id={passwordFieldId}
               placeholder="Yourpasswordhere"
+              autoComplete="off"
             />
             <ErrorMessage
               name="password"
               component="span"
               className={css.errorMsg}
             />
+            <span onClick={togglePassword} className={css.iconButton}>
+              {visible ? (
+                <Icon id="icon-eye-off" className={css.icon} />
+              ) : (
+                <Icon id="icon-eye" className={css.icon} />
+              )}
+            </span>
           </label>
         </div>
         <div className={css.buttonContainer}>
@@ -60,6 +78,7 @@ export const LoginForm = () => {
           </button>
           <button
             className={css.accountBtn}
+            type="button"
             onClick={() => navigate("/register")}
           >
             Don't have an account?
