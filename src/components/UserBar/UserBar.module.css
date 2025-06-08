@@ -1,0 +1,15 @@
+.profileIcon {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  fill: var(--fourth-font-color);
+  stroke-width: 1px;
+  stroke: rgba(249, 249, 249, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+  .profileIcon {
+    width: 40px;
+    height: 40px;
+  }
+}

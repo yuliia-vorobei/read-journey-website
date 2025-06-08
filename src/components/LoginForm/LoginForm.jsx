@@ -24,7 +24,6 @@ export const LoginForm = () => {
   const handleSubmit = (values, actions) => {
     dispatch(login(values));
     actions.resetForm();
-    navigate("/recommended");
   };
 
   return (
