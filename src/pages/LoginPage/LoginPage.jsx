@@ -1,16 +1,11 @@
-import { useSelector } from "react-redux";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
 import { Logo } from "../../components/Logo/Logo";
 import { PhoneComponent } from "../../components/PhoneComponent/PhoneComponent";
 import css from "./LoginPage.module.css";
-import { selectIsLoading } from "../../redux/auth/selectors";
-import { Loader } from "../../components/Loader/Loader";
 
 export const LoginPage = () => {
-  const isLoading = useSelector(selectIsLoading);
   return (
     <div className={css.layout}>
-      {isLoading && <Loader />}
       <div className={css.container}>
         <div className={css.logoContainer}>
           <Logo />

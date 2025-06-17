@@ -30,7 +30,6 @@ export const login = createAsyncThunk(
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-      // vorobeju1@gmail.com
     }
   }
 );
@@ -52,21 +51,21 @@ export const getCurrent = createAsyncThunk(
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
-    async (_, thunkAPI) => {
-      try {
-    const reduxState = thunkAPI.getState();
-    const refreshToken = reduxState.auth.refreshToken;
-    setAuthHeader(refreshToken);
-    const response = await axios.get("/users/current/refresh");
-    return response.data;
-  } catch (error) {
+  async (_, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const refreshToken = reduxState.auth.refreshToken;
+      setAuthHeader(refreshToken);
+      const response = await axios.get("/users/current/refresh");
+      return response.data;
+    } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-  }
-    },
+    }
+  },
   {
     condition: (_, thunkAPI) => {
-      const reduxState = thunkAPI.getState();
-      return reduxState.auth.refreshToken !== null;
+      const refreshToken = thunkAPI.getState().auth.refreshToken;
+      return refreshToken !== null;
     },
   }
 );

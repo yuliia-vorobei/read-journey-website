@@ -4,6 +4,13 @@ import { selectName } from "../../redux/auth/selectors";
 
 export const UserBar = () => {
   const name = useSelector(selectName);
-
-  return <p className={css.profileIcon}>{name}</p>;
+  // const sliceName = (letter) => {
+  //   return letter.slice(0, 1);
+  // };
+  return (
+    <div className={css.container}>
+      {/* <span className={css.icon}>{sliceName(name)}</span> */}
+      <p className={css.profileName}>{name}</p>
+    </div>
+  );
 };

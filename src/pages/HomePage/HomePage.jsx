@@ -1,14 +1,7 @@
-import { useSelector } from "react-redux";
-import { Header } from "../../components/Header/Header";
-
 const HomePage = () => {
-  const { title } = useSelector((state) => state.books);
-  return (
-    <>
-      <Header />
-      <p>{title}</p>
-    </>
-  );
+  console.log("🏠 HomePage rendered");
+
+  return <h1>Welcome to the Home Page!</h1>;
 };
 
 export default HomePage;

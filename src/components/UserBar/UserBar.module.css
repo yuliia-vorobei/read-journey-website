@@ -1,15 +1,45 @@
-.profileIcon {
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
   width: 35px;
   height: 35px;
   border-radius: 100%;
-  fill: var(--fourth-font-color);
-  stroke-width: 1px;
-  stroke: rgba(249, 249, 249, 0.2);
+  background-color: var(--fourth-font-color);
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: var(--main-font-color);
+  border-radius: 100%;
 }
 
 @media screen and (min-width: 768px) {
-  .profileIcon {
+  .icon {
     width: 40px;
     height: 40px;
+    line-height: 112%;
+  }
+}
+
+.profileName {
+  visibility: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .profileName {
+    visibility: visible;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: var(--main-font-color);
   }
 }

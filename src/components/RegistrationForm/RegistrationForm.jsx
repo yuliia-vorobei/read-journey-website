@@ -43,7 +43,6 @@ export const RegistrationForm = () => {
   const handleSubmit = (values, actions) => {
     dispatch(register(values));
     actions.resetForm();
-    navigate("/recommended");
   };
 
   return (

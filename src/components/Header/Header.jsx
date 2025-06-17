@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Logo } from "../Logo/Logo";
 import { UserBar } from "../UserBar/UserBar";
-import { UserNav } from "../UserNav/UserNav ";
+import { UserNav } from "../UserNav/UserNav";
 import css from "./Header.module.css";
 import { logout } from "../../redux/auth/operations";
 import { useNavigate } from "react-router-dom";

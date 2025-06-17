@@ -33,7 +33,7 @@
     gap: 20px;
     align-items: start;
     width: 353px;
-    height: 651px;
+    min-height: 651px;
     padding-top: 40px;
     padding-left: 20px;
   }

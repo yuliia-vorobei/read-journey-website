@@ -4,8 +4,9 @@ import axios from "axios";
 const setAuthHeader = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
+
 export const recommendation = createAsyncThunk(
-  "books/recommendation",
+  "recommendedBooks/recommendation",
   async (credentials, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();

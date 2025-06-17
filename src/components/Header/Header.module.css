@@ -10,6 +10,7 @@
   align-content: center;
   align-self: center;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 @media screen and (min-width: 375px) {
@@ -23,6 +24,7 @@
     width: 704px;
     height: 74px;
     padding: 0 16px;
+    margin-bottom: 16px;
   }
 }
 
@@ -51,5 +53,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 }

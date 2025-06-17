@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getCurrent, login, logout, refreshUser, register } from "./operations";
-import { recommendation } from "../books/operations";
+import { recommendation } from "../recommendedBooks/operations";
 
 const authSlice = createSlice({
   name: "auth",
@@ -22,6 +22,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
+        // state.isRefreshing = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.name = action.payload.name;
@@ -29,20 +30,28 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
-        state.isRefreshing = false;
-
+        // state.isRefreshing = false;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
+        state.name = action.payload.name;
+        state.email = action.payload.email;
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.isLoading = false;
         state.isRefreshing = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.error = action.payload;
       })
       .addCase(getCurrent.pending, (state) => {
         state.isRefreshing = true;
+        // state.isLoggedIn = true;
         state.isLoading = true;
       })
       .addCase(getCurrent.fulfilled, (state, action) => {
@@ -57,7 +66,6 @@ const authSlice = createSlice({
         state.error = null;
         state.items = action.payload;
         state.isRefreshing = false;
-
       })
       .addCase(logout.fulfilled, () => {
         return {
@@ -71,21 +79,20 @@ const authSlice = createSlice({
           error: null,
         };
       })
+      .addMatcher(isAnyOf(register.pending, login.pending), (state) => {
+        state.isLoggedIn = false;
+        state.isLoading = true;
+      })
       .addMatcher(
-        isAnyOf(register.pending, login.pending),
-        (state) => {
-          state.isLoggedIn = false;
-          state.isLoading = true;
-        }
-      )
-      .addMatcher(
-        isAnyOf(register.rejected, login.rejected, refreshUser.rejected, getCurrent.rejected),
+        isAnyOf(
+          register.rejected,
+          login.rejected,
+
+          getCurrent.rejected
+        ),
         (state, action) => {
-          state.isLoggedIn = false;
           state.isLoading = true;
           state.error = action.payload;
-        state.isRefreshing = false;
-
         }
       );
   },

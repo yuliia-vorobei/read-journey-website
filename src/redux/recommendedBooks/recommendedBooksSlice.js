@@ -1,6 +1,6 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { recommendation } from "./operations";
+import { createSlice } from "@reduxjs/toolkit";
 import { logout } from "../auth/operations";
+import { recommendation } from "./operations";
 
 const initialState = {
   items: {
@@ -13,11 +13,14 @@ const initialState = {
   error: null,
 };
 
-const booksSlice = createSlice({
-  name: "books",
+const recommendedBooksSlice = createSlice({
+  name: "recommendedBooks",
   initialState,
   extraReducers: (builder) => {
     builder
+      .addCase(recommendation.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(recommendation.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -33,14 +36,11 @@ const booksSlice = createSlice({
           error: null,
         };
       })
-      .addMatcher(isAnyOf(recommendation.pending), (state) => {
-        state.isLoading = true;
-      })
-      .addMatcher(isAnyOf(recommendation.rejected), (state, action) => {
+      .addCase(recommendation.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default booksSlice.reducer;
+export default recommendedBooksSlice.reducer;
