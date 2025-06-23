@@ -30,12 +30,12 @@
 }
 
 .profileName {
-  visibility: hidden;
+  display: none;
 }
 
 @media screen and (min-width: 1440px) {
   .profileName {
-    visibility: visible;
+    display: block;
     font-weight: 700;
     font-size: 16px;
     line-height: 100%;

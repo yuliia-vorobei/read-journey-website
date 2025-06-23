@@ -13,7 +13,8 @@
   margin: 150px auto;
   background-color: var(--fifth-font-color);
   border-radius: 12px;
-  padding: 16px;
+  padding-top: 16px;
+  padding-right: 16px;
   border: 1px solid rgba(104, 104, 104, 0.2);
 }
 
@@ -34,6 +35,11 @@
   justify-content: end;
 
   cursor: pointer;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .icon {

@@ -15,12 +15,12 @@ const RegistrationPage = lazy(() =>
 const RecommendedPage = lazy(() =>
   import("./pages/RecommendedPage/RecommendedPage")
 );
+const ReadingPage = lazy(() => import("./pages/ReadingPage/ReadingPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 import LibraryPage from "./pages/LibraryPage/LibraryPage";
 import { PrivateRoute } from "./components/UserMenu/PrivateRoute/PrivateRoute";
 import { RestrictedRoute } from "./components/UserMenu/RestrictedRoute";
-// import ReadingPage from "./pages/ReadingPage/ReadingPage";
 
 function App() {
   const isRefreshing = useSelector(selectIsRefreshing);
@@ -71,8 +71,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/recommended" element={<RecommendedPage />} />
           <Route path="/library" element={<LibraryPage />} />
-          {/* </>
-          )} */}
+          <Route path="/reading" element={<ReadingPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

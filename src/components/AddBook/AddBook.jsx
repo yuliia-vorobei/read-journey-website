@@ -1,14 +1,11 @@
 import { useEffect, useId, useState } from "react";
-import css from "./DashboardLibrary.module.css";
+import css from "./AddBook.module.css";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import Icon from "../Icon/Icon";
+import { useDispatch } from "react-redux";
 import { recommendation } from "../../redux/recommendedBooks/operations";
 import { addBook } from "../../redux/ownBooks/operations";
-import { selectItems } from "../../redux/recommendedBooks/selectors";
-import { Modal } from "../Modal/Modal";
+import { AddedBookModal } from "../AddedBookModal/AddedBookModal";
 
 const AddingBookSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
@@ -22,14 +19,10 @@ const initialValues = {
   totalPages: "",
 };
 
-export const DashboardLibrary = () => {
+export const AddBook = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const openModal = () => {
     setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsOpenModal(false);
   };
 
   const dispatch = useDispatch();
@@ -37,9 +30,8 @@ export const DashboardLibrary = () => {
     dispatch(recommendation());
   }, [dispatch]);
 
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(addBook(values));
+  const handleSubmit = async (values, actions) => {
+    await dispatch(addBook(values));
     actions.resetForm();
     openModal();
   };
@@ -48,13 +40,8 @@ export const DashboardLibrary = () => {
   const authorFieldId = useId();
   const pagesFieldId = useId();
 
-  const items = useSelector(selectItems);
-  if (!items || !items.results) {
-    return <Loader />;
-  }
-
   return (
-    <div className={css.container}>
+    <>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -120,43 +107,7 @@ export const DashboardLibrary = () => {
           </button>
         </Form>
       </Formik>
-      {isOpenModal && (
-        <Modal handleClose={closeModal}>
-          <img src="../../../public/thumb-up.png" />
-          <h4>Good job</h4>
-          <p>
-            Your book is now in <span>the library!</span> The joy knows no
-            bounds and now you can start your training
-          </p>
-        </Modal>
-      )}
-      <div className={css.recommendedContainer}>
-        <h3 className={css.recommendedTitle}>Recommended books</h3>
-        <ul className={css.list}>
-          {items.results.slice(0, 3).map(({ _id, imageUrl, title, author }) => {
-            return (
-              <li key={_id} className={css.item}>
-                <img
-                  src={imageUrl}
-                  width="137"
-                  height="208"
-                  className={css.image}
-                />
-                <p className={css.bookTitle}>{title}</p>
-                <p className={css.bookAuthor}>{author}</p>
-              </li>
-            );
-          })}
-        </ul>
-        <div className={css.buttonContainer}>
-          <NavLink to="/" className={css.homeLink}>
-            Home
-          </NavLink>
-          <NavLink to="/recommended">
-            <Icon id="icon-log-in" className={css.icon} />
-          </NavLink>
-        </div>
-      </div>
-    </div>
+      {isOpenModal && <AddedBookModal onClose={() => setIsOpenModal(false)} />}
+    </>
   );
 };

@@ -6,11 +6,13 @@ import { Loader } from "../../components/Loader/Loader.jsx";
 import { RecommendedBooks } from "../../components/RecommendedBooks/RecommendedBooks.jsx";
 import { recommendation } from "../../redux/recommendedBooks/operations.js";
 import { selectIsLoading } from "../../redux/recommendedBooks/selectors.js";
+import { Filters } from "../../components/Filters/Filters.jsx";
+import { WorkoutComponent } from "../../components/WorkoutComponent/WorkoutComponent.jsx";
+import { QuoteComponent } from "../../components/QuoteComponent/QuoteComponent.jsx";
 
 const RecommendedPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
-  console.log("📚 RecommendedPage rendered");
 
   useEffect(() => {
     dispatch(recommendation());
@@ -18,7 +20,11 @@ const RecommendedPage = () => {
 
   return (
     <section className={css.container}>
-      <Dashboard />
+      <Dashboard>
+        <Filters />
+        <WorkoutComponent />
+        <QuoteComponent />
+      </Dashboard>
       <RecommendedBooks />
       {isLoading && <Loader />}
     </section>

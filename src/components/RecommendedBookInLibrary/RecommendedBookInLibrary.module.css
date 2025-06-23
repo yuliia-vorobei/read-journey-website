@@ -1,0 +1,124 @@
+.recommendedContainer {
+  border-radius: 12px;
+  background: var(--fourth-font-color);
+  padding: 20px;
+  /* margin-top: 20px; */
+  width: 100%;
+}
+
+@media screen and (min-width: 375px) {
+  .recommendedContainer {
+    width: 295px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .recommendedContainer {
+    width: 313px;
+  }
+}
+
+.recommendedTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: var(--third-font-color);
+  margin-bottom: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  .recommendedTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.list {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  margin-bottom: 17px;
+  align-items: center;
+}
+
+@media screen and (min-width: 375px) {
+  .list {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .list {
+    margin-bottom: 20px;
+  }
+}
+
+.item {
+  width: 71px;
+}
+
+.image {
+  border-radius: 8px;
+  width: 71px;
+  height: 107px;
+}
+
+.bookTitle {
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--third-font-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+
+.bookAuthor {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--secondary-font-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.homeLink {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 117%;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--secondary-font-color);
+}
+
+@media screen and (min-width: 768px) {
+  .homeLink {
+    font-size: 14px;
+    line-height: 129%;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .homeLink {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

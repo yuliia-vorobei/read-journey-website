@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice.js";
 import recommendedBooksReducer from "./recommendedBooks/recommendedBooksSlice.js";
 import ownBooksReducer from "./ownBooks/ownBooksSlice.js";
+import startReadingBookReducer from "./startReadingBook/startReadingBookSlice.js";
 import storage from "redux-persist/lib/storage";
 import {
   persistStore,
@@ -18,9 +19,18 @@ const persistedAuthReducer = persistReducer(
   {
     key: "jwt-token",
     storage,
-    whitelist: ["token", "refreshToken"],
+    whitelist: ["token", "refreshToken", "startReadingBook"],
   },
   authReducer
+);
+
+const persistedStartReadingReducer = persistReducer(
+  {
+    key: "readingBook",
+    storage,
+    whitelist: ["selectedBook"],
+  },
+  startReadingBookReducer
 );
 
 export const store = configureStore({
@@ -28,6 +38,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     recommendedBooks: recommendedBooksReducer,
     ownBooks: ownBooksReducer,
+    startReadingBook: persistedStartReadingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

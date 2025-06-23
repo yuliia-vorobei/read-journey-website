@@ -12,7 +12,6 @@ export const addBook = createAsyncThunk(
       const token = reduxState.auth.token;
       setAuthHeader(token);
       const { data } = await axios.post("/books/add", book);
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -28,8 +27,39 @@ export const getOwnBooks = createAsyncThunk(
       const token = reduxState.auth.token;
       setAuthHeader(token);
       const { data } = await axios.get("/books/own", credentials);
-      console.log(data);
+      // console.log(data);
       return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addRecommendedBook = createAsyncThunk(
+  "ownBooks/addRecommendedBook",
+  async (bookId, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token;
+      setAuthHeader(token);
+      await axios.post(`/books/add/${bookId}`);
+      return bookId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteBook = createAsyncThunk(
+  "ownBooks/deleteBook",
+  async (bookId, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token;
+      setAuthHeader(token);
+      await axios.delete(`/books/remove/${bookId}`);
+      // console.log(bookId);
+      return bookId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

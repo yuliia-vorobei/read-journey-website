@@ -1,11 +1,16 @@
-import { DashboardLibrary } from "../../components/DashboardLibrary/DashboardLibrary";
+import { Dashboard } from "../../components/Dashboard/Dashboard ";
+import { AddBook } from "../../components/AddBook/AddBook";
 import { MyLibraryBooks } from "../../components/MyLibraryBooks/MyLibraryBooks";
 import css from "./LibraryPage.module.css";
+import { RecommendedBookInLibrary } from "../../components/RecommendedBookInLibrary/RecommendedBookInLibrary";
 
 const LibraryPage = () => {
   return (
     <div className={css.container}>
-      <DashboardLibrary />
+      <Dashboard>
+        <AddBook />
+        <RecommendedBookInLibrary />
+      </Dashboard>
       <MyLibraryBooks />
     </div>
   );

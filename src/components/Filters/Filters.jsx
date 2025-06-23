@@ -20,12 +20,12 @@ export const Filters = () => {
       <p className={css.filterTitle}>Filters: </p>
 
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form>
+        <Form autoComplete="off">
           <div className={css.formContainer}>
             <label htmlFor={bookFieldId} className={css.fieldContainer}>
               <span className={css.label}>Book title:</span>
               <Field
-                type="text"
+                type="authorName"
                 name="title"
                 className={css.field}
                 id={bookFieldId}
@@ -47,6 +47,7 @@ export const Filters = () => {
                 className={css.field}
                 id={authorFieldId}
                 placeholder="Enter text"
+                autoComplete="off"
                 required
               />
               <ErrorMessage

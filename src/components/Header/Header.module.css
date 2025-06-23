@@ -7,10 +7,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  align-content: center;
-  align-self: center;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+.mobMenuContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 @media screen and (min-width: 375px) {
@@ -55,4 +59,9 @@
     justify-content: center;
     cursor: pointer;
   }
+}
+
+.userBar {
+  display: flex;
+  gap: 16px;
 }

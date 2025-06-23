@@ -1,14 +1,9 @@
-import { Filters } from "../Filters/Filters";
-import { QuoteComponent } from "../QuoteComponent/QuoteComponent";
-import { WorkoutComponent } from "../WorkoutComponent/WorkoutComponent";
 import css from "./Dashboard.module.css";
 
-export const Dashboard = () => {
+export const Dashboard = ({ children }) => {
   return (
-    <div className={css.container}>
-      <Filters />
-      <WorkoutComponent />
-      <QuoteComponent />
-    </div>
+    <section className={css.container}>
+      <main className={css.dashboardContent}>{children}</main>
+    </section>
   );
 };

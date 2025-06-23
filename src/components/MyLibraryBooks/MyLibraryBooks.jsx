@@ -2,29 +2,32 @@ import { useEffect, useId, useState } from "react";
 import css from "./MyLibraryBooks.module.css";
 import Icon from "../Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
-import { getOwnBooks } from "../../redux/ownBooks/operations";
+import { deleteBook, getOwnBooks } from "../../redux/ownBooks/operations";
 import { selectResults } from "../../redux/ownBooks/selectors";
-import { OneBookComponent } from "../OneBookComponent/OneBookComponent";
-import { Modal } from "../Modal/Modal";
 import { Loader } from "../Loader/Loader";
+import { BookModalComponent } from "../BookModalComponent/BookModalComponent";
+import { useNavigate } from "react-router-dom";
+import { getBookInfo } from "../../redux/startReadingBook/operations";
 
 export const MyLibraryBooks = () => {
   const [bookStatus, setBookStatus] = useState("all");
-  const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
-  function openModal(book) {
-    setShowModal(true);
-    setSelectedBook(book);
-  }
-  const handleClose = () => {
-    setShowModal(false);
-    setSelectedBook(null);
-  };
+  // const [startReadingBook, setstartReadingBook] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getOwnBooks());
   }, [dispatch]);
+
+  const startReading = async (book) => {
+    await dispatch(getBookInfo(book._id));
+    navigate("/reading");
+  };
+
+  const handleDelete = async (bookId) => {
+    await dispatch(deleteBook(bookId));
+  };
 
   const selectId = useId();
 
@@ -62,7 +65,7 @@ export const MyLibraryBooks = () => {
           </div>
         </div>
       </div>
-      {results < 0 ? (
+      {results.length === 0 ? (
         <div className={css.readingContainer}>
           <span className={css.decorativeContainer}>
             <img
@@ -83,17 +86,14 @@ export const MyLibraryBooks = () => {
           {results.map((book) => {
             const { _id, imageUrl, title, author } = book;
             return (
-              <li
-                key={_id}
-                className={css.item}
-                onClick={() => openModal(book)}
-              >
+              <li key={_id} className={css.item}>
                 {imageUrl === null ? (
                   <img
                     src="../../../public/book_placeholder.png"
                     width="137"
-                    height="200"
+                    height="208"
                     className={css.image}
+                    onClick={() => setSelectedBook(book)}
                   />
                 ) : (
                   <img
@@ -101,42 +101,39 @@ export const MyLibraryBooks = () => {
                     width="137"
                     height="208"
                     className={css.image}
+                    onClick={() => setSelectedBook(book)}
                   />
                 )}
                 <div className={css.infoContainer}>
                   <div className={css.titleContainer}>
-                    <p className={css.title}>{title}</p>
+                    <p className={css.bookTitle}>{title}</p>
                     <p className={css.author}>{author}</p>
                   </div>
-                  <span className={css.iconSpan}>
+                  <span
+                    className={css.iconSpan}
+                    onClick={() => handleDelete(_id)}
+                  >
                     <Icon id="icon-bin" className={css.bin} />
                   </span>
                 </div>
               </li>
             );
           })}
-          {showModal && selectedBook && (
-            <Modal handleClose={handleClose}>
-              {selectedBook.imageUrl === null ? (
-                <img
-                  src="../../../public/book_placeholder.png"
-                  width="137"
-                  height="208"
-                  className={css.imageModal}
-                />
-              ) : (
-                <img
-                  src={selectedBook.imageUrl}
-                  width="137"
-                  height="208"
-                  className={css.imageModal}
-                />
-              )}
 
-              <p className={css.titleModal}>{selectedBook.title}</p>
-              <p className={css.authorModal}>{selectedBook.author}</p>
-              <p className={css.pages}>{selectedBook.totalPages} pages</p>
-            </Modal>
+          {selectedBook && (
+            <BookModalComponent
+              book={selectedBook}
+              onClose={() => setSelectedBook(null)}
+              submitButton={
+                <button
+                  type="button"
+                  className={css.btn}
+                  onClick={() => startReading(selectedBook)}
+                >
+                  Start reading
+                </button>
+              }
+            />
           )}
         </ul>
       )}

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Icon from "../Icon/Icon";
 import css from "./Modal.module.css";
 
-export const Modal = ({ handleClose, children }) => {
+export const Modal = ({ handleClose, children, submitButton }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -37,6 +37,9 @@ export const Modal = ({ handleClose, children }) => {
           <Icon id="icon-close-burger-menu" className={css.icon} />
         </span>
         <div className={css.content}>{children}</div>
+        {submitButton && (
+          <div className={css.buttonWrapper}>{submitButton}</div>
+        )}
       </div>
     </div>
   );

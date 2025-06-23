@@ -7,7 +7,7 @@
   --fifth-font-color: #1f1f1f;
   --decorative-blue-color: #4f92f7;
   --decorative-green-color: #30b94d;
-  --error-message-color: #ee3535;
+  --error-message-color: #e90516;
 }
 
 @font-face {
@@ -69,4 +69,14 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
   -webkit-text-fill-color: #fff !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

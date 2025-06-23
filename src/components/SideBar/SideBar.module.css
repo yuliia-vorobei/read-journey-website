@@ -1,21 +1,16 @@
 .titleContainer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex-direction: row;
-  gap: 32px;
-}
-
-@media screen and (min-width: 375px) {
-  .titleContainer {
-    gap: 40px;
-  }
+  flex-grow: 1;
+  gap: 20px;
 }
 
 .pageTitle {
-  font-family: var(--font-family);
   font-weight: 500;
-  font-size: 16px;
-  line-height: 112%;
+  font-size: 14px;
+  line-height: 129%;
   letter-spacing: -0.02em;
   color: var(--secondary-font-color);
   text-decoration: none;
@@ -30,7 +25,7 @@
   content: "";
   position: absolute;
   left: 0px;
-  bottom: -8px;
+  bottom: -4px;
   border-radius: 8px;
   height: 4px;
   background-color: var(--decorative-blue-color);
@@ -38,14 +33,40 @@
   width: 100%;
 }
 
+.icon {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: var(--main-font-color);
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .iconContainer {
+    display: none;
+  }
+}
+
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+.closeIcon {
+  height: 28px;
+  width: 28px;
+  stroke: var(--main-font-color);
+  /* padding-top: 34px; */
+}
+
 .logoutBtn {
   border: 1px solid rgba(249, 249, 249, 0.2);
   border-radius: 30px;
   width: 91px;
   height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: transparent;
   font-weight: 700;
   font-size: 14px;
