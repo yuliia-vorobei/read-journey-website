@@ -101,7 +101,11 @@ export const SideBar = () => {
           }}
         >
           <nav className={css.titleContainer}>
-            <NavLink to="/" className={activeClass} onClick={handleOnClose}>
+            <NavLink
+              to="/recommended"
+              className={activeClass}
+              onClick={handleOnClose}
+            >
               Home
             </NavLink>
             <NavLink

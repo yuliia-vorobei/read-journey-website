@@ -12,6 +12,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 767px)");
+  const isComputer = useMediaQuery("(min-width: 1440px)");
 
   const handleSubmit = async () => {
     await dispatch(logout());
@@ -20,7 +21,10 @@ export const Header = () => {
 
   return (
     <header className={css.header}>
-      <Logo />
+      <div className={css.logoContainer}>
+        <Logo />
+        {isComputer && <p className={css.logoText}>read journey</p>}
+      </div>
       {!isMobile ? (
         <>
           <div className={css.userNav}>

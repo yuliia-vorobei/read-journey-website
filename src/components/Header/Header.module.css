@@ -11,6 +11,20 @@
   margin-bottom: 10px;
 }
 
+.logoContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.logoText {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--main-font-color);
+}
+
 .mobMenuContainer {
   display: flex;
   align-items: center;

@@ -7,7 +7,8 @@ const initialState = {
     results: [],
     totalPages: 0,
     page: 1,
-    perPage: 10,
+    perPage: 8,
+    loadMoreEnabled: true,
   },
   isLoading: false,
   error: null,
@@ -16,15 +17,30 @@ const initialState = {
 const recommendedBooksSlice = createSlice({
   name: "recommendedBooks",
   initialState,
+  reducers: {
+    setLoadMoreEnabled(state, action) {
+      state.loadMoreEnabled = action.payload;
+    },
+    clearItems(state) {
+      state.items = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(recommendation.pending, (state) => {
+        // if (!state.loadMoreEnabled) {
+        //   return;
+        // }
         state.isLoading = true;
       })
       .addCase(recommendation.fulfilled, (state, action) => {
+        // if (!state.loadMoreEnabled) {
+        //   return;
+        // }
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;
+        // state.items.totalPages = action.payload.totalPages;
       })
       .addCase(logout.fulfilled, () => {
         return {
@@ -37,10 +53,14 @@ const recommendedBooksSlice = createSlice({
         };
       })
       .addCase(recommendation.rejected, (state, action) => {
+        // if (!state.loadMoreEnabled) {
+        //   return;
+        // }
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
+export const { setLoadMoreEnabled, clearItems } = recommendedBooksSlice.actions;
 export default recommendedBooksSlice.reducer;

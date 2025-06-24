@@ -1,13 +1,12 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
 import { getCurrent, refreshUser } from "./redux/auth/operations";
 import { Loader } from "./components/Loader/Loader";
-import SharedLayout from "./components/SharedLayout/SharedLayout";
+import MainLayout from "./components/MainLayout/MainLayout";
 
-const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const RegistrationPage = lazy(() =>
   import("./pages/RegistrationPage/RegistrationPage")
@@ -23,59 +22,59 @@ import { PrivateRoute } from "./components/UserMenu/PrivateRoute/PrivateRoute";
 import { RestrictedRoute } from "./components/UserMenu/RestrictedRoute";
 
 function App() {
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refreshUser()).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
+    dispatch(refreshUser())
+      .then(() => {
         dispatch(getCurrent());
-      }
-    });
+      })
+      .finally(() => {
+        setAuthChecked(true);
+      });
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  //   // dispatch(getCurrent());
-  // }, [dispatch]);
+  if (!authChecked) {
+    return <Loader />;
+  }
 
-  return isRefreshing && !isLoggedIn ? (
-    <Loader />
-  ) : (
-    <SharedLayout>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <RestrictedRoute
-                component={<LoginPage />}
-                redirectTo="/recommended"
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <RestrictedRoute
-                component={<RegistrationPage />}
-                redirectTo="/recommended"
-              />
-            }
-          />
-
-          {/* {isLoggedIn && (
-            <> */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/recommended" element={<RecommendedPage />} />
-          <Route path="/library" element={<LibraryPage />} />
-          <Route path="/reading" element={<ReadingPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </SharedLayout>
+  return (
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute
+              component={<LoginPage />}
+              redirectTo="/recommended"
+            />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              component={<RegistrationPage />}
+              redirectTo="/recommended"
+            />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute component={<MainLayout />} redirectTo="/login" />
+          }
+        >
+          <Route index element={<Navigate to="/recommended" />} />
+          <Route path="recommended" element={<RecommendedPage />} />
+          <Route path="library" element={<LibraryPage />} />
+          <Route path="reading" element={<ReadingPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }
 

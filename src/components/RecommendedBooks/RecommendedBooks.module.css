@@ -29,6 +29,11 @@
   }
 }
 
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title {
   font-weight: 700;
   font-size: 20px;
@@ -45,4 +50,31 @@
     line-height: 114%;
     margin-bottom: 28px;
   }
+}
+
+.iconsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  border: none;
+  border-radius: 100%;
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  cursor: pointer;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.5px;
+  stroke: var(--main-font-color);
 }

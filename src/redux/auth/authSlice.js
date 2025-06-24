@@ -61,12 +61,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isRefreshing = false;
       })
-      .addCase(recommendation.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.items = action.payload;
-        state.isRefreshing = false;
-      })
+      // .addCase(recommendation.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.name = action.payload.name;
+      //   state.error = null;
+      //   state.items = action.payload;
+      //   state.isRefreshing = false;
+      // })
       .addCase(logout.fulfilled, () => {
         return {
           name: null,
@@ -84,15 +85,11 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addMatcher(
-        isAnyOf(
-          register.rejected,
-          login.rejected,
-
-          getCurrent.rejected
-        ),
+        isAnyOf(register.rejected, login.rejected, getCurrent.rejected),
         (state, action) => {
-          state.isLoading = true;
+          state.isLoading = false;
           state.error = action.payload;
+          state.isRefreshing = false;
         }
       );
   },

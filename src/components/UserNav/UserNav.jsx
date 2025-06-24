@@ -8,7 +8,7 @@ export const UserNav = () => {
 
   return (
     <nav className={css.titleContainer}>
-      <NavLink to="/" className={activeClass}>
+      <NavLink to="/recommended" className={activeClass}>
         Home
       </NavLink>
       <NavLink to="/library" className={activeClass}>

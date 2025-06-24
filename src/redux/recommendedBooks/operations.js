@@ -5,6 +5,25 @@ const setAuthHeader = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
+// export const recommendation = createAsyncThunk(
+//   "recommendedBooks/recommendation",
+//   async ({ page, perPage }, credentials, thunkAPI) => {
+//     try {
+//       const reduxState = thunkAPI.getState();
+//       const token = reduxState.auth.token;
+//       setAuthHeader(token);
+//       const { data } = await axios.get(
+//         `/books/recommend?page=${page}&limit=${perPage}`,
+//         credentials
+//       );
+//       console.log(data);
+//       return data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 export const recommendation = createAsyncThunk(
   "recommendedBooks/recommendation",
   async (credentials, thunkAPI) => {
