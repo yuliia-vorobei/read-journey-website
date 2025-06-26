@@ -10,11 +10,7 @@ const NotFoundPage = () => {
     <div className={css.container}>
       <PiSmileySadDuotone />
       <h3 className={css.title}>Sorry this page does not exist!</h3>
-      {isLoggedIn ? (
-        <Navigate to="/">To Home Page</Navigate>
-      ) : (
-        <Navigate to="/login">Login Page</Navigate>
-      )}
+      {isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />}
     </div>
   );
 };

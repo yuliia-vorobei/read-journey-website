@@ -134,11 +134,26 @@
   margin: 0 auto;
   stroke: var(--main-font-color);
   fill: var(--error-message-color);
-  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
   .startIcon {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.pauseIcon {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2px;
+  margin: 0 auto;
+  fill: var(--error-message-color);
+  border-color: transparent;
+}
+
+@media screen and (min-width: 768px) {
+  .pauseIcon {
     width: 50px;
     height: 50px;
   }

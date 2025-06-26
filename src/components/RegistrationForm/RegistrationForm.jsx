@@ -76,7 +76,6 @@ export const RegistrationForm = () => {
               autoComplete="new-password"
               type="email"
               name="email"
-              autoFill="off"
               className={css.field}
               id={emailFieldId}
               placeholder="Your@email.com"

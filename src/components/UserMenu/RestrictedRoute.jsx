@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import {
+  selectIsLoading,
   selectIsLoggedIn,
   selectIsRefreshing,
 } from "../../redux/auth/selectors";
@@ -8,9 +9,9 @@ import { Loader } from "../Loader/Loader";
 
 export const RestrictedRoute = ({ component, redirectTo }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoading = useSelector(selectIsLoading);
   const isRefreshing = useSelector(selectIsRefreshing);
-
-  if (isRefreshing) {
+  if (isRefreshing || isLoading) {
     return <Loader />;
   }
 

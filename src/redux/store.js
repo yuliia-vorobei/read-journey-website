@@ -19,7 +19,7 @@ const persistedAuthReducer = persistReducer(
   {
     key: "jwt-token",
     storage,
-    whitelist: ["token", "refreshToken", "startReadingBook"],
+    whitelist: ["token", "refreshToken"],
   },
   authReducer
 );
@@ -28,7 +28,7 @@ const persistedStartReadingReducer = persistReducer(
   {
     key: "readingBook",
     storage,
-    whitelist: ["selectedBook"],
+    whitelist: ["selectedBook", "startReadingBook"],
   },
   startReadingBookReducer
 );

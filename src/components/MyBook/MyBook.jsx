@@ -4,12 +4,15 @@ import { useEffect } from "react";
 import { Loader } from "../Loader/Loader";
 import { getBookInfo } from "../../redux/startReadingBook/operations";
 import Icon from "../Icon/Icon";
+import {
+  selectBooks,
+  selectStartReadingIcon,
+} from "../../redux/startReadingBook/selectors";
 
 export const MyBook = () => {
   const dispatch = useDispatch();
-  const selectedBook = useSelector(
-    (state) => state.startReadingBook.selectedBook
-  );
+  const selectedBook = useSelector(selectBooks);
+  const selectIcon = useSelector(selectStartReadingIcon);
 
   useEffect(() => {
     if (selectedBook && selectedBook._id) {
@@ -38,7 +41,11 @@ export const MyBook = () => {
         <p className={css.bookTitle}>{selectedBook.title}</p>
         <p className={css.bookAuthor}>{selectedBook.author}</p>
       </div>
-      <Icon id="icon-start-reading" className={css.startIcon} />
+      {!selectIcon ? (
+        <Icon id="icon-pause" className={css.pauseIcon} />
+      ) : (
+        <Icon id="icon-start-reading" className={css.startIcon} />
+      )}
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getCurrent, login, logout, refreshUser, register } from "./operations";
-import { recommendation } from "../recommendedBooks/operations";
 
 const authSlice = createSlice({
   name: "auth",
@@ -22,7 +21,8 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
-        // state.isRefreshing = false;
+        state.isRefreshing = false;
+        state.isLoading = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.name = action.payload.name;
@@ -30,7 +30,8 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
         state.isLoggedIn = true;
-        // state.isRefreshing = false;
+        state.isLoading = false;
+        state.isRefreshing = false;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
@@ -51,7 +52,6 @@ const authSlice = createSlice({
       })
       .addCase(getCurrent.pending, (state) => {
         state.isRefreshing = true;
-        // state.isLoggedIn = true;
         state.isLoading = true;
       })
       .addCase(getCurrent.fulfilled, (state, action) => {
@@ -61,13 +61,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isRefreshing = false;
       })
-      // .addCase(recommendation.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.name = action.payload.name;
-      //   state.error = null;
-      //   state.items = action.payload;
-      //   state.isRefreshing = false;
-      // })
+
       .addCase(logout.fulfilled, () => {
         return {
           name: null,
@@ -90,6 +84,7 @@ const authSlice = createSlice({
           state.isLoading = false;
           state.error = action.payload;
           state.isRefreshing = false;
+          state.isLoggedIn = false;
         }
       );
   },

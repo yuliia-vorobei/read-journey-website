@@ -20,3 +20,33 @@ export const getBookInfo = createAsyncThunk(
     }
   }
 );
+
+export const startReading = createAsyncThunk(
+  "startReadingBook/startReading",
+  async (page, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token;
+      setAuthHeader(token);
+      const { data } = await axios.post("/books/reading/start", page);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const stopReading = createAsyncThunk(
+  "startReadingBook/stopReading",
+  async (page, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token;
+      setAuthHeader(token);
+      const { data } = await axios.post("/books/reading/finish", page);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
