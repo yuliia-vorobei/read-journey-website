@@ -1,17 +1,11 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getBookInfo, startReading, stopReading } from "./operations";
+import { logout } from "../auth/operations";
 
 const initialState = {
   selectedBook: null,
-  startReadingIcon: true,
   isLoading: false,
   error: null,
-  // items: {
-  //   process: [],
-  //   status: "",
-  //   totalPages: 0,
-  //   timeLeftToRead: {},
-  // },
 };
 
 const startReadingBook = createSlice({
@@ -26,14 +20,24 @@ const startReadingBook = createSlice({
       })
       .addCase(startReading.fulfilled, (state, action) => {
         state.isLoading = false;
-        // state.items = action.payload;
         state.selectedBook = action.payload;
         state.startReadingIcon = true;
       })
       .addCase(stopReading.fulfilled, (state, action) => {
         state.isLoading = false;
         state.selectedBook = action.payload;
-        state.startReadingIcon = false;
+        state.stopReadingIcon = true;
+      })
+      .addCase(logout.fulfilled, () => {
+        return {
+          name: null,
+          email: null,
+          token: null,
+          isLoggedIn: false,
+          isLoading: false,
+          error: null,
+          selectedBook: null,
+        };
       })
       .addMatcher(
         isAnyOf(getBookInfo.pending, startReading.pending, stopReading.pending),

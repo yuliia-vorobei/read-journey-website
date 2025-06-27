@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId } from "react";
 import css from "./AddReading.module.css";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -14,43 +14,50 @@ const AddingPageSchema = Yup.object().shape({
 });
 
 export const AddReading = () => {
-  const selectedBook = useSelector(selectBooks);
-  const [start, setStart] = useState(false);
-  // const [stop, setStop] = useState(false);
-
-  // const id = selectedBook._id;
-  // console.log(id);
-  // console.log(selectedBook._id);
   const dispatch = useDispatch();
+  const pageFieldId = useId();
+
+  const selectedBooks = useSelector(selectBooks);
+  const _id = selectedBooks?._id || null;
+  const progress = selectedBooks?.progress || [];
+
+  console.log(selectedBooks);
+  const lastProgress =
+    progress.length > 0 ? progress[progress.length - 1] : null;
+  console.log(lastProgress);
+
   const initialValues = {
-    id: selectedBook._id,
+    id: _id || "",
     page: 0,
   };
 
-  const handleSubmitStart = async (values, actions) => {
-    if (!start) {
+  const handleSubmit = async (values, actions) => {
+    if (!_id) {
+      alert("No book selected");
+      actions.setSubmitting(false);
+      return;
+    }
+    if (!lastProgress || lastProgress.status === "inactive") {
       await dispatch(startReading(values));
-      setStart(true);
     } else {
       await dispatch(stopReading(values));
-      setStart(false);
     }
     actions.resetForm();
   };
 
-  const pageFieldId = useId();
+  const isActive = lastProgress?.status === "active";
 
   return (
     <div className={css.container}>
       <Formik
         initialValues={initialValues}
         validationSchema={AddingPageSchema}
-        onSubmit={handleSubmitStart}
+        onSubmit={handleSubmit}
       >
         <Form autoComplete="off">
           <div className={css.formContainer}>
             <p className={css.filterTitle}>
-              {start ? "Stop page: " : "Start page: "}
+              {isActive ? "Stop page:" : "Start page:"}
             </p>
 
             <label htmlFor={pageFieldId} className={css.fieldContainer}>
@@ -71,21 +78,10 @@ export const AddReading = () => {
             </label>
           </div>
           <button type="submit" className={css.button}>
-            {start ? "To stop" : "To start"}
+            {isActive ? "To stop" : "To start"}
           </button>
         </Form>
       </Formik>
-
-      <div className={css.progressContainer}>
-        <h4 className={css.titleProgress}>Progress</h4>
-        <p className={css.quoteProgress}>
-          Here you will see when and how much you read. To record, click on the
-          red button above.
-        </p>
-        <span className={css.iconProgress}>
-          <img src="../../../public/progress-emoji.png" className={css.icon} />
-        </span>
-      </div>
     </div>
   );
 };

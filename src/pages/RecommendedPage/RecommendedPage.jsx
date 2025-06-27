@@ -1,6 +1,6 @@
 import css from "./RecommendedPage.module.css";
 import { Dashboard } from "../../components/Dashboard/Dashboard .jsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader.jsx";
 import { RecommendedBooks } from "../../components/RecommendedBooks/RecommendedBooks.jsx";

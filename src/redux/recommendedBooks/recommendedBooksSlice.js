@@ -50,6 +50,7 @@ const recommendedBooksSlice = createSlice({
           isLoggedIn: false,
           isLoading: false,
           error: null,
+          selectedBook: null,
         };
       })
       .addCase(recommendation.rejected, (state, action) => {

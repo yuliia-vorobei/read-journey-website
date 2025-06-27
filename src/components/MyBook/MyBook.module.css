@@ -158,3 +158,52 @@
     height: 50px;
   }
 }
+
+.defaultcontainer {
+  padding: 40px 20px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: var(--fifth-font-color);
+  gap: 25px;
+}
+
+@media screen and (min-width: 375px) {
+  .defaultcontainer {
+    width: 335px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .defaultcontainer {
+    width: 704px;
+    padding-top: 40px;
+    padding-bottom: 25px;
+    padding-left: 40px;
+    gap: 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .defaultcontainer {
+    width: 847px;
+    padding-bottom: 53px;
+    gap: 40px;
+    height: 651px;
+    justify-content: center;
+  }
+}
+
+.message {
+  color: var(--main-font-color);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+}
+
+.imageBookShelf {
+  align-self: center;
+}

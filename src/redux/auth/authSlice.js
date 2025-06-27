@@ -72,6 +72,7 @@ const authSlice = createSlice({
           isLoading: false,
           isRefreshing: false,
           error: null,
+          selectedBook: null,
         };
       })
       .addMatcher(isAnyOf(register.pending, login.pending), (state) => {

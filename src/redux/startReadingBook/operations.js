@@ -13,7 +13,6 @@ export const getBookInfo = createAsyncThunk(
       const token = reduxState.auth.token;
       setAuthHeader(token);
       const { data } = await axios.get(`/books/${bookId}`);
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

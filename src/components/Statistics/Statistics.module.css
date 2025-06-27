@@ -1,0 +1,37 @@
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: var(--main-font-color);
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .title {
+    margin-bottom: 20px;
+  }
+}
+
+.text {
+  display: none;
+}
+
+@media screen and (min-width: 1440px) {
+  .text {
+    display: block;
+    font-weight: 500;
+    width: 293px;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: var(--secondary-font-color);
+  }
+}

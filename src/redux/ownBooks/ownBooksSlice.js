@@ -19,16 +19,7 @@ const ownBooksSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(logout.fulfilled, () => {
-        return {
-          name: null,
-          email: null,
-          token: null,
-          isLoggedIn: false,
-          isLoading: false,
-          error: null,
-        };
-      })
+
       .addCase(addBook.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -64,7 +55,17 @@ const ownBooksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
+      .addCase(logout.fulfilled, () => {
+        return {
+          name: null,
+          email: null,
+          token: null,
+          isLoggedIn: false,
+          isLoading: false,
+          error: null,
+          selectedBook: null,
+        };
+      })
       .addMatcher(
         isAnyOf(addBook.pending, getOwnBooks.pending, deleteBook.pending),
         (state) => {

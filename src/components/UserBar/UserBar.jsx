@@ -4,7 +4,6 @@ import { Loader } from "../Loader/Loader";
 
 export const UserBar = () => {
   const name = useSelector((state) => state.auth.name);
-  console.log(name);
   if (!name) {
     return;
   }
