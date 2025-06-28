@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: var(--main-font-color);
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .title {
+    margin-bottom: 20px;
+  }
+}
+
+.icon {
+  width: 20px;
+  stroke-width: 2px;
+  height: 20px;
+  fill: none;
+  cursor: pointer;
+  stroke: var(--secondary-font-color);
+}
+
+.active {
+  stroke: var(--main-font-color);
+  fill: none;
+}
+
+.iconContainer {
+  display: flex;
+  gap: 8px;
+}

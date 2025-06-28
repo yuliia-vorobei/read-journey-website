@@ -6,6 +6,8 @@ import { Statistics } from "../../components/Statistics/Statistics";
 import css from "./ReadingPage.module.css";
 import { selectBooks } from "../../redux/startReadingBook/selectors";
 import { Progress } from "../../components/Progress/Progress";
+import Icon from "../../components/Icon/Icon";
+import { ReadingPageHeader } from "../../components/ReadingPageHeader/ReadingPageHeader";
 
 const ReadingPage = () => {
   const selectedBooks = useSelector(selectBooks);
@@ -16,8 +18,10 @@ const ReadingPage = () => {
       <Dashboard>
         <div className={css.dashboardContainer}>
           <AddReading />
-          {hasProgress ? <Statistics /> : <Progress />}
-          {/* {selectBooks.progress > 0 && <Statistics />} */}
+          <div>
+            <ReadingPageHeader />
+            {!hasProgress && <Progress />}
+          </div>
         </div>
       </Dashboard>
       <MyBook />

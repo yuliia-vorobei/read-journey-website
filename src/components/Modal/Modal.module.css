@@ -46,6 +46,7 @@
   width: 22px;
   height: 22px;
   stroke: var(--main-font-color);
+  stroke-width: 2px;
 }
 
 .content {
