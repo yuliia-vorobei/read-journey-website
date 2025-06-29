@@ -3,13 +3,11 @@ import { logout } from "../auth/operations";
 import { recommendation } from "./operations";
 
 const initialState = {
-  items: {
-    results: [],
-    totalPages: 0,
-    page: 1,
-    perPage: 8,
-    loadMoreEnabled: true,
-  },
+  results: [],
+  loadMoreEnabled: true,
+  page: 1,
+  totalPages: 0,
+  perPage: 8,
   isLoading: false,
   error: null,
 };
@@ -22,26 +20,26 @@ const recommendedBooksSlice = createSlice({
       state.loadMoreEnabled = action.payload;
     },
     clearItems(state) {
-      state.items = null;
+      state.results = [];
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(recommendation.pending, (state) => {
-        // if (!state.loadMoreEnabled) {
-        //   return;
-        // }
+        if (!state.loadMoreEnabled) {
+          return;
+        }
         state.isLoading = true;
       })
       .addCase(recommendation.fulfilled, (state, action) => {
-        // if (!state.loadMoreEnabled) {
-        //   return;
-        // }
+        if (!state.loadMoreEnabled) return;
+
+        state.results = action.payload.results;
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload;
-        // state.items.totalPages = action.payload.totalPages;
+        state.totalPages = action.payload.totalPages;
       })
+
       .addCase(logout.fulfilled, () => {
         return {
           name: null,
@@ -54,9 +52,9 @@ const recommendedBooksSlice = createSlice({
         };
       })
       .addCase(recommendation.rejected, (state, action) => {
-        // if (!state.loadMoreEnabled) {
-        //   return;
-        // }
+        if (!state.loadMoreEnabled) {
+          return;
+        }
         state.isLoading = false;
         state.error = action.payload;
       });

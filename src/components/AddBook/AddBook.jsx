@@ -21,14 +21,12 @@ const initialValues = {
 
 export const AddBook = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+
   const openModal = () => {
     setIsOpenModal(true);
   };
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(recommendation());
-  }, [dispatch]);
 
   const handleSubmit = async (values, actions) => {
     await dispatch(addBook(values));

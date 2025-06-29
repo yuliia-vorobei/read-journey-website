@@ -1,24 +1,40 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import css from "./RecommendedBookInLibrary.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectItems } from "../../redux/recommendedBooks/selectors";
 import Icon from "../Icon/Icon";
+import { Loader } from "../Loader/Loader";
+import { useEffect, useState } from "react";
+import { recommendation } from "../../redux/recommendedBooks/operations";
 
 export const RecommendedBookInLibrary = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const navigation = () => {
     navigate("/recommended");
   };
 
-  const items = useSelector(selectItems);
-  if (!items || !items.results) {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(8);
+
+  useEffect(() => {
+    setPage(1);
+  }, [perPage]);
+
+  useEffect(() => {
+    dispatch(recommendation({ page, perPage }));
+  }, [dispatch, page, perPage]);
+  const results = useSelector(selectItems);
+  if (!results) {
     return <Loader />;
   }
+
+  console.log(results, "results");
   return (
     <div className={css.recommendedContainer}>
       <h3 className={css.recommendedTitle}>Recommended books</h3>
       <ul className={css.list}>
-        {items.results.slice(0, 3).map(({ _id, imageUrl, title, author }) => {
+        {results.slice(0, 3).map(({ _id, imageUrl, title, author }) => {
           return (
             <li key={_id} className={css.item}>
               <img

@@ -18,3 +18,17 @@
     align-items: start;
   }
 }
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  stroke-width: 1px;
+  stroke: rgba(249, 249, 249, 0.2);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  fill: none;
+}

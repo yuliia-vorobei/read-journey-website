@@ -42,7 +42,6 @@ export const getOwnBooks = createAsyncThunk(
       const token = reduxState.auth.token;
       setAuthHeader(token);
       const { data } = await axios.get("/books/own", credentials);
-      // console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -58,7 +57,6 @@ export const deleteBook = createAsyncThunk(
       const token = reduxState.auth.token;
       setAuthHeader(token);
       await axios.delete(`/books/remove/${bookId}`);
-      // console.log(bookId);
       return bookId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

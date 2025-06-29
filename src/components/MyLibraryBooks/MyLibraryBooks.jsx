@@ -13,7 +13,6 @@ export const MyLibraryBooks = () => {
   const [bookStatus, setBookStatus] = useState("all");
   const [selectedBook, setSelectedBook] = useState(null);
   // const [startReadingBook, setstartReadingBook] = useState(null);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,6 +31,7 @@ export const MyLibraryBooks = () => {
   const selectId = useId();
 
   const results = useSelector(selectResults);
+  console.log(results);
   if (!results) {
     return <Loader />;
   }

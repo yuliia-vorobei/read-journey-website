@@ -6,7 +6,6 @@ import { deleteProgress } from "../../redux/startReadingBook/operations";
 
 export const OneDayProgress = () => {
   const selectedBook = useSelector(selectBooks);
-  console.log(selectedBook);
   const { progress, totalPages } = selectedBook;
   const dispatch = useDispatch();
 
@@ -16,12 +15,10 @@ export const OneDayProgress = () => {
     );
 
     sessionsToDelete.forEach((session) => {
-      console.log(session._id, "session");
       dispatch(deleteProgress({ bookId, readingId: session._id }));
     });
   };
 
-  console.log(progress);
   const sessionByDate = progress.reduce((acc, session) => {
     if (!session?.finishReading) return acc;
     const date = session.finishReading.slice(0, 10);
@@ -52,19 +49,6 @@ export const OneDayProgress = () => {
 
     return { pagesRead, formattedDate, percentPages, date };
   });
-
-  //   const pagesPerDay = uniqueDate.reduce((prevValue, page) => {
-  //     const start = page.startPage ?? 0;
-  //     const finish = page.finishPage ?? 0;
-  //     return prevValue + (finish - start);
-  //   }, 0);
-
-  //   console.log(dateEntries);
-  //   const totalPages = progress.reduce((prevValue, page) => {
-  //     const start = page.startPage ?? 0;
-  //     const finish = page.finishPage ?? 0;
-  //     return prevValue + (finish - start);
-  //   }, 0);
 
   return (
     <ul className={css.list}>

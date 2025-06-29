@@ -9,7 +9,9 @@ import { ReadingPageHeader } from "../../components/ReadingPageHeader/ReadingPag
 
 const ReadingPage = () => {
   const selectedBooks = useSelector(selectBooks);
-  const hasProgress = selectedBooks?.progress?.length > 0;
+  const hasProgress = selectedBooks?.progress?.length !== 0;
+  console.log(hasProgress);
+  console.log(selectedBooks.progress);
 
   return (
     <section className={css.container}>

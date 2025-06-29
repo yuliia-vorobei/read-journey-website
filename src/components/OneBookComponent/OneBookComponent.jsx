@@ -2,13 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../Loader/Loader";
 import css from "./OneBookComponent.module.css";
 import { useState } from "react";
-import { selectItems } from "../../redux/recommendedBooks/selectors";
 import { BookModalComponent } from "../BookModalComponent/BookModalComponent";
 import { addRecommendedBook } from "../../redux/ownBooks/operations";
 import { AddedBookModal } from "../AddedBookModal/AddedBookModal";
 
 export const OneBookComponent = () => {
-  const items = useSelector(selectItems);
+  const results = useSelector((state) => state.recommendedBooks.results);
   const dispatch = useDispatch();
 
   const [selectedBook, setSelectedBook] = useState(null);
@@ -20,13 +19,13 @@ export const OneBookComponent = () => {
     setIsOpenModal(true);
   };
 
-  if (!items || !items.results) {
+  if (!results) {
     return <Loader />;
   }
 
   return (
     <ul className={css.list}>
-      {items.results.map((book) => {
+      {results.map((book) => {
         const { _id, imageUrl, title, author } = book;
         return (
           <li key={_id} className={css.item}>

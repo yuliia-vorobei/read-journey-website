@@ -63,7 +63,6 @@ export const deleteProgress = createAsyncThunk(
           readingId,
         },
       });
-      console.log(bookId);
       return bookId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
