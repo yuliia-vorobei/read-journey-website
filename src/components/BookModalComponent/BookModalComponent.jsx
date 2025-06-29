@@ -7,7 +7,7 @@ export const BookModalComponent = ({ book, onClose, submitButton }) => {
       <div className={css.modalContainer}>
         {book.imageUrl === null ? (
           <img
-            src="../../../public/book_placeholder.png"
+            src="/book_placeholder.png"
             width="137"
             height="208"
             className={css.imageModal}

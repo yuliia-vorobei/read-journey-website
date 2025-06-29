@@ -8,7 +8,7 @@ export const Progress = () => {
         red button above.
       </p>
       <span className={css.iconProgress}>
-        <img src="../../../public/progress-emoji.png" className={css.icon} />
+        <img src="/progress-emoji.png" className={css.icon} />
       </span>
     </div>
   );

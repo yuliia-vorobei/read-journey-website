@@ -5,7 +5,7 @@ export const AddedBookModal = ({ onClose }) => {
   return (
     <Modal handleClose={onClose}>
       <div className={css.modalContainer}>
-        <img src="../../../public/thumb-up.png" className={css.thumbEmoji} />
+        <img src="/thumb-up.png" className={css.thumbEmoji} />
         <h4 className={css.modalTitle}>Good job</h4>
         <p className={css.modalQuote}>
           Your book is now in{" "}

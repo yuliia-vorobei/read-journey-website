@@ -6,7 +6,7 @@ export const Logo = () => {
   const handleClick = () => navigate("/");
   return (
     <div onClick={handleClick} className={css.logo}>
-      <img src="../../../public/favicon.png" />
+      <img src="/favicon.png" />
     </div>
   );
 };

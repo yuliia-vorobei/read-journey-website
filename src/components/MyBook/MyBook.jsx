@@ -18,7 +18,7 @@ export const MyBook = () => {
     return (
       <div className={css.defaultcontainer}>
         <img
-          src="../../../public/book-shelf.png"
+          src="/book-shelf.png"
           width="137"
           height="208"
           className={css.imageBookShelf}
@@ -44,7 +44,7 @@ export const MyBook = () => {
       <div className={css.contentContainer}>
         {!imageUrl ? (
           <img
-            src="../../../public/book_placeholder.png"
+            src="/book_placeholder.png"
             width="137"
             height="208"
             className={css.image}

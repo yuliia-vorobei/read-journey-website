@@ -29,7 +29,6 @@ export const RecommendedBookInLibrary = () => {
     return <Loader />;
   }
 
-  console.log(results, "results");
   return (
     <div className={css.recommendedContainer}>
       <h3 className={css.recommendedTitle}>Recommended books</h3>

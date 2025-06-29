@@ -31,7 +31,6 @@ export const MyLibraryBooks = () => {
   const selectId = useId();
 
   const results = useSelector(selectResults);
-  console.log(results);
   if (!results) {
     return <Loader />;
   }
@@ -69,7 +68,7 @@ export const MyLibraryBooks = () => {
         <div className={css.readingContainer}>
           <span className={css.decorativeContainer}>
             <img
-              src="../../../public/books.png"
+              src="/books.png"
               width="50"
               height="50"
               className={css.imageEmoji}
@@ -89,7 +88,7 @@ export const MyLibraryBooks = () => {
               <li key={_id} className={css.item}>
                 {imageUrl === null ? (
                   <img
-                    src="../../../public/book_placeholder.png"
+                    src="/book_placeholder.png"
                     width="137"
                     height="208"
                     className={css.image}

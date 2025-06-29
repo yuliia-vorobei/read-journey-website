@@ -15,7 +15,6 @@ export const recommendation = createAsyncThunk(
       const { data } = await axios.get(
         `/books/recommend?page=${page}&limit=${perPage}`
       );
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
