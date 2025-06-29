@@ -9,8 +9,10 @@ import Icon from "../Icon/Icon";
 
 export const Statistics = () => {
   const selectedBooks = useSelector(selectBooks);
-  const { progress, totalPages } = selectedBooks;
-  const stoppedSessions = selectedBooks.progress.filter(
+  const totalPages = selectedBooks?.totalPages || null;
+  const progress = selectedBooks?.progress || [];
+
+  const stoppedSessions = progress.filter(
     (session) => session.status === "inactive"
   );
 
@@ -109,7 +111,6 @@ export const Statistics = () => {
     };
   }, [pagesRead, totalPages, percent]);
 
-  console.log(selectedBooks);
   return (
     <section>
       <p className={css.text}>

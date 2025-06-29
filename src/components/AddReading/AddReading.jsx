@@ -21,10 +21,8 @@ export const AddReading = () => {
   const _id = selectedBooks?._id || null;
   const progress = selectedBooks?.progress || [];
 
-  console.log(selectedBooks);
   const lastProgress =
     progress.length > 0 ? progress[progress.length - 1] : null;
-  console.log(lastProgress);
 
   const initialValues = {
     id: _id || "",

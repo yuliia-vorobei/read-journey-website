@@ -49,3 +49,24 @@ export const stopReading = createAsyncThunk(
     }
   }
 );
+
+export const deleteProgress = createAsyncThunk(
+  "startReadingBook/deleteProgress",
+  async ({ bookId, readingId }, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      const token = reduxState.auth.token;
+      setAuthHeader(token);
+      await axios.delete("/books/reading", {
+        params: {
+          bookId,
+          readingId,
+        },
+      });
+      console.log(bookId);
+      return bookId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

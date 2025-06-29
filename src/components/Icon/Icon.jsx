@@ -6,7 +6,6 @@ const Icon = ({ id, width, height, className = "", fill }) => {
       height={height}
       aria-hidden="true"
       fill={fill}
-      viewBox="0 0 32 32"
     >
       <use href={`/icons.svg#${id}`}></use>
     </svg>

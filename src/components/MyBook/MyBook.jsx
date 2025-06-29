@@ -30,7 +30,7 @@ export const MyBook = () => {
 
   const { progress, imageUrl, title, author } = selectedBook;
   const lastProgress =
-    progress.length > 0 ? progress[progress.length - 1] : null;
+    progress?.length > 0 ? progress[progress.length - 1] : null;
 
   if (!selectedBook) {
     return <Loader />;
@@ -42,7 +42,7 @@ export const MyBook = () => {
     <div className={css.container}>
       <h4 className={css.title}>My reading</h4>
       <div className={css.contentContainer}>
-        {imageUrl === null ? (
+        {!imageUrl ? (
           <img
             src="../../../public/book_placeholder.png"
             width="137"

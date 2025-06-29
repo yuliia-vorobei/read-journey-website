@@ -2,11 +2,9 @@ import { useSelector } from "react-redux";
 import { AddReading } from "../../components/AddReading/AddReading";
 import { Dashboard } from "../../components/Dashboard/Dashboard ";
 import { MyBook } from "../../components/MyBook/MyBook";
-import { Statistics } from "../../components/Statistics/Statistics";
 import css from "./ReadingPage.module.css";
 import { selectBooks } from "../../redux/startReadingBook/selectors";
 import { Progress } from "../../components/Progress/Progress";
-import Icon from "../../components/Icon/Icon";
 import { ReadingPageHeader } from "../../components/ReadingPageHeader/ReadingPageHeader";
 
 const ReadingPage = () => {
@@ -18,10 +16,7 @@ const ReadingPage = () => {
       <Dashboard>
         <div className={css.dashboardContainer}>
           <AddReading />
-          <div>
-            <ReadingPageHeader />
-            {!hasProgress && <Progress />}
-          </div>
+          <div>{!hasProgress ? <Progress /> : <ReadingPageHeader />}</div>
         </div>
       </Dashboard>
       <MyBook />

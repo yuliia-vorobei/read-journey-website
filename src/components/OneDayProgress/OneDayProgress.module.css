@@ -1,0 +1,143 @@
+.list {
+  width: 100%;
+  height: 211px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: 17px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--fourth-font-color);
+}
+
+@media screen and (min-width: 375px) {
+  .list {
+    width: 295px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .list {
+    width: 321px;
+    height: 252px;
+    gap: 14px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .list {
+    padding: 20px;
+    width: 313px;
+    height: 373px;
+    gap: 22px;
+  }
+}
+
+.list li {
+  background: url(/public/list-marker.svg) no-repeat left top;
+  padding: 0px 0 3px 24px;
+  /* list-style-image: url(/public/list-marker.svg); */
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 133%;
+  letter-spacing: 0.02em;
+  color: var(--main-font-color);
+  margin-bottom: 17px;
+}
+
+@media screen and (min-width: 768px) {
+  .date {
+    font-size: 16px;
+    line-height: 112%;
+  }
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.rightContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconContainer {
+  display: flex;
+  gap: 6px;
+}
+
+@media screen and (min-width: 768px) {
+  .iconContainer {
+    gap: 8px;
+  }
+}
+
+.totalPages {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  letter-spacing: -0.02em;
+  color: var(--secondary-font-color);
+  margin-bottom: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .totalPages {
+    font-size: 14px;
+    line-height: 129%;
+    margin-bottom: 18px;
+  }
+}
+
+.pagePercentage {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  color: var(--main-font-color);
+}
+
+@media screen and (min-width: 768px) {
+  .pagePercentage {
+    font-size: 20px;
+    line-height: 100%;
+  }
+}
+
+.dairyContainer {
+  width: 43px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .dairyContainer {
+    width: 58px;
+    height: 25px;
+  }
+}
+
+.iconProgress {
+  width: 100%;
+  height: 100%;
+}
+
+.iconBin {
+  stroke: var(--secondary-font-color);
+  fill: none;
+  width: 14px;
+  height: 14px;
+}

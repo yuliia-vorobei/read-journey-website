@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+
+  border-radius: 12px;
+  background-color: var(--fourth-font-color);
+}
+
+@media screen and (min-width: 375px) {
+  .container {
+    width: 295px;
+  }
+}
