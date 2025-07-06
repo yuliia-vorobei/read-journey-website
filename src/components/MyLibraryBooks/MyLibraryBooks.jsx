@@ -12,9 +12,12 @@ import { getBookInfo } from "../../redux/startReadingBook/operations";
 export const MyLibraryBooks = () => {
   const [bookStatus, setBookStatus] = useState("all");
   const [selectedBook, setSelectedBook] = useState(null);
-  // const [startReadingBook, setstartReadingBook] = useState(null);
+
+  const results = useSelector(selectResults);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getOwnBooks());
   }, [dispatch]);
@@ -30,7 +33,6 @@ export const MyLibraryBooks = () => {
 
   const selectId = useId();
 
-  const results = useSelector(selectResults);
   if (!results) {
     return <Loader />;
   }

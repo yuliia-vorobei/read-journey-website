@@ -23,13 +23,23 @@ const ownBooksSlice = createSlice({
       .addCase(addBook.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        // state.results = action.payload;
         state.results.push(action.payload);
       })
       .addCase(getOwnBooks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.results = action.payload;
+        const sameBook = new Set();
+        const uniqueBooks = [];
+
+        for (const book of action.payload) {
+          const key = `${book.title}-${book.author}`.toLowerCase();
+          if (!sameBook.has(key)) {
+            sameBook.add(key);
+            uniqueBooks.push(book);
+          }
+        }
+        state.results = uniqueBooks;
+        // state.results = action.payload;
       })
 
       .addCase(deleteBook.fulfilled, (state, action) => {

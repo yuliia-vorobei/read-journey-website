@@ -11,12 +11,20 @@ export const RecommendedBooks = () => {
   const error = useSelector(selectError);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
   const { totalPages } = useSelector((state) => state.recommendedBooks);
+  const getInitialPerPage = () => {
+    const width = window.innerWidth;
+    if (width >= 1440) return 10;
+    if (width >= 768) return 8;
+    return 2;
+  };
+
+  const [perPage, setPerPage] = useState(getInitialPerPage);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
+
       if (width >= 1440) {
         setPerPage(10);
       } else if (width >= 768) {
