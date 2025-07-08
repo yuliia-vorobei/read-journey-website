@@ -31,3 +31,7 @@
   height: 46px;
   background-color: transparent;
 }
+
+.swal-button:hover {
+  background-color: transparent;
+}

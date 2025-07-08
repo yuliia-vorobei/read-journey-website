@@ -30,13 +30,15 @@ export const handleError = (status) => {
       });
       break;
     case 409:
-      swal("Such data already exists", {
+      swal({
+        title: "Such data already exists",
         className: "my-swal-modal",
         button: "Close",
       });
       break;
     case 500:
-      swal("Server error, try again later", {
+      swal({
+        title: "Server error, try again later",
         className: "my-swal-modal",
         button: "Close",
       });
