@@ -1,10 +1,19 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
+import * as Yup from "yup";
 import { useId, useState } from "react";
 import css from "./LoginForm.module.css";
 import { useNavigate } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/auth/operations.js";
+
+const LogInSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Must be a valid email!")
+    .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+    .required("Required"),
+  password: Yup.string().required("Required"),
+});
 
 const initialValues = {
   email: "",
@@ -23,11 +32,16 @@ export const LoginForm = () => {
 
   const handleSubmit = (values, actions) => {
     dispatch(login(values));
+    console.log(values);
     actions.resetForm();
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={LogInSchema}
+    >
       <Form autoComplete="off">
         <div className={css.formContainer}>
           <label htmlFor={emailFieldId} className={css.fieldContainer}>

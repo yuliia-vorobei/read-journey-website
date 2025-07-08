@@ -1,0 +1,33 @@
+.swal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.my-swal-modal {
+  background-color: rgba(104, 104, 104, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.swal-title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--main-font-color);
+}
+
+.swal-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  color: var(--secondary-font-color);
+}
+
+.swal-button {
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  border-radius: 30px;
+  height: 46px;
+  background-color: transparent;
+}

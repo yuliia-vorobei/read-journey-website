@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { handleError } from "../../hooks/handleError";
 
 axios.defaults.baseURL = "https://readjourney.b.goit.study/api";
 const setAuthHeader = (token) => {
@@ -11,28 +12,29 @@ const clearAuthHeader = () => {
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (credentials, thunkAPI) => {
+  async (credentials) => {
     try {
       const { data } = await axios.post("/users/signup", credentials);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
 
-export const login = createAsyncThunk(
-  "auth/login",
-  async (credentials, thunkAPI) => {
-    try {
+export const login = createAsyncThunk("auth/login", async (credentials) => {
+  try {
+    if (!credentials) {
+      handleError();
+    } else {
       const { data } = await axios.post("/users/signin", credentials);
       setAuthHeader(data.token);
       return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
     }
+  } catch (error) {
+    return handleError(error.response?.status);
   }
-);
+});
 
 export const getCurrent = createAsyncThunk(
   "auth/current",
@@ -44,7 +46,7 @@ export const getCurrent = createAsyncThunk(
       const { data } = await axios.get("/users/current");
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
@@ -59,7 +61,7 @@ export const refreshUser = createAsyncThunk(
       const response = await axios.get("/users/current/refresh");
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   },
   {
@@ -78,6 +80,6 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     await axios.post("/users/signout");
     clearAuthHeader();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return handleError(error.response?.status);
   }
 });

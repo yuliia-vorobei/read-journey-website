@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { handleError } from "../../hooks/handleError";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -14,7 +15,7 @@ export const addBook = createAsyncThunk(
       const { data } = await axios.post("/books/add", book);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
@@ -29,7 +30,7 @@ export const addRecommendedBook = createAsyncThunk(
       await axios.post(`/books/add/${bookId}`);
       return bookId;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
@@ -44,7 +45,7 @@ export const getOwnBooks = createAsyncThunk(
       const { data } = await axios.get("/books/own", credentials);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
@@ -59,7 +60,7 @@ export const deleteBook = createAsyncThunk(
       await axios.delete(`/books/remove/${bookId}`);
       return bookId;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return handleError(error.response?.status);
     }
   }
 );
