@@ -14,7 +14,6 @@ export const handleError = (status) => {
     case 401:
       swal({
         title: "Unauthorized",
-        text: "Invalid email or password",
         icon: "error",
         button: "Close",
         className: "my-swal-modal",

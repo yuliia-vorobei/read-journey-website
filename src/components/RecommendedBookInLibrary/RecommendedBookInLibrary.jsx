@@ -24,6 +24,7 @@ export const RecommendedBookInLibrary = () => {
   useEffect(() => {
     dispatch(recommendation({ page, perPage }));
   }, [dispatch, page, perPage]);
+
   const results = useSelector(selectItems);
   if (!results) {
     return <Loader />;

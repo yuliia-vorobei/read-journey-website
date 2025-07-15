@@ -16,7 +16,9 @@ export const getBookInfo = createAsyncThunk(
       const { data } = await axios.get(`/books/${bookId}`);
       return data;
     } catch (error) {
-      return handleError(error.response?.status);
+      const status = error.response?.status;
+      handleError(status);
+      return thunkAPI.rejectWithValue(status);
     }
   }
 );
@@ -31,7 +33,9 @@ export const startReading = createAsyncThunk(
       const { data } = await axios.post("/books/reading/start", page);
       return data;
     } catch (error) {
-      return handleError(error.response?.status);
+      const status = error.response?.status;
+      handleError(status);
+      return thunkAPI.rejectWithValue(status);
     }
   }
 );
@@ -46,7 +50,9 @@ export const stopReading = createAsyncThunk(
       const { data } = await axios.post("/books/reading/finish", page);
       return data;
     } catch (error) {
-      return handleError(error.response?.status);
+      const status = error.response?.status;
+      handleError(status);
+      return thunkAPI.rejectWithValue(status);
     }
   }
 );
@@ -66,7 +72,9 @@ export const deleteProgress = createAsyncThunk(
       });
       return bookId;
     } catch (error) {
-      return handleError(error.response?.status);
+      const status = error.response?.status;
+      handleError(status);
+      return thunkAPI.rejectWithValue(status);
     }
   }
 );

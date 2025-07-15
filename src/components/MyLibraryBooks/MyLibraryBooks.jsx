@@ -10,17 +10,16 @@ import { useNavigate } from "react-router-dom";
 import { getBookInfo } from "../../redux/startReadingBook/operations";
 
 export const MyLibraryBooks = () => {
-  const [bookStatus, setBookStatus] = useState("all");
   const [selectedBook, setSelectedBook] = useState(null);
+  const [status, setStatus] = useState("all");
 
   const results = useSelector(selectResults);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getOwnBooks());
-  }, [dispatch]);
+    dispatch(getOwnBooks({ status }));
+  }, [dispatch, status]);
 
   const startReading = async (book) => {
     await dispatch(getBookInfo(book._id));
@@ -46,13 +45,13 @@ export const MyLibraryBooks = () => {
             <select
               className={css.select}
               id={selectId}
-              value={bookStatus}
-              onChange={(evt) => setBookStatus(evt.target.value)}
+              value={status}
+              onChange={(evt) => setStatus(evt.target.value)}
             >
               <option value="unread" className={css.option}>
                 Unread
               </option>
-              <option value="progress" className={css.option}>
+              <option value="in-progress" className={css.option}>
                 In progress
               </option>
               <option value="done" className={css.option}>

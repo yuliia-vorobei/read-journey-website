@@ -32,7 +32,6 @@ export const LoginForm = () => {
 
   const handleSubmit = (values, actions) => {
     dispatch(login(values));
-    console.log(values);
     actions.resetForm();
   };
 

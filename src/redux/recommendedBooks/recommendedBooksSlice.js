@@ -5,9 +5,7 @@ import { recommendation } from "./operations";
 const initialState = {
   results: [],
   loadMoreEnabled: true,
-  page: 1,
   totalPages: 0,
-  perPage: 8,
   isLoading: false,
   error: null,
 };

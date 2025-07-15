@@ -18,7 +18,9 @@ export const recommendation = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      return handleError(error.response?.status);
+      const status = error.response?.status;
+      handleError(status);
+      return thunkAPI.rejectWithValue(status);
     }
   }
 );

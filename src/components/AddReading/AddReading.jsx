@@ -2,6 +2,7 @@ import { useId } from "react";
 import css from "./AddReading.module.css";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import * as Yup from "yup";
+import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startReading,
@@ -31,7 +32,11 @@ export const AddReading = () => {
 
   const handleSubmit = async (values, actions) => {
     if (!_id) {
-      alert("No book selected");
+      swal({
+        title: "No book selected",
+        button: "Close",
+        className: "my-swal-modal",
+      });
       actions.setSubmitting(false);
       return;
     }
