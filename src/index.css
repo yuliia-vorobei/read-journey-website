@@ -8,6 +8,7 @@
   --decorative-blue-color: #4f92f7;
   --decorative-green-color: #30b94d;
   --error-message-color: #e90516;
+  margin: 20px;
 }
 
 @font-face {
@@ -29,7 +30,7 @@ body {
   font-family: "GilroyMedium", sans-serif;
   background-color: var(--main-bg-color);
   line-height: 1.5;
-  margin: 20px;
+  margin: 20px !important;
 }
 
 h1,

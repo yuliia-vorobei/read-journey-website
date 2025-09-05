@@ -93,7 +93,6 @@
   border: none;
   outline: none;
   background-color: inherit;
-  /* width: inherit; */
   color: var(--main-font-color);
   max-width: 160px;
 }
