@@ -1,0 +1,16 @@
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 50px 50px 50px;
+}
+
+.modalQuote {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  color: var(--secondary-font-color);
+  max-width: 242px;
+  text-align: center;
+}

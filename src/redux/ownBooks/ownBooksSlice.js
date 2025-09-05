@@ -9,6 +9,8 @@ import { logout } from "../auth/operations";
 
 const initialState = {
   results: [],
+  currentPage: 1,
+  itemsPerPage: 6,
   selectedBook: null,
   isLoading: false,
   error: null,
@@ -17,6 +19,15 @@ const initialState = {
 const ownBooksSlice = createSlice({
   name: "ownBooks",
   initialState,
+  reducers: {
+    setPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action) => {
+      state.itemsPerPage = action.payload;
+      state.currentPage = 1;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -28,18 +39,17 @@ const ownBooksSlice = createSlice({
       .addCase(getOwnBooks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const sameBook = new Set();
-        const uniqueBooks = [];
-
-        for (const book of action.payload) {
-          const key = `${book.title}-${book.author}`.toLowerCase();
-          if (!sameBook.has(key)) {
-            sameBook.add(key);
-            uniqueBooks.push(book);
-          }
-        }
-        state.results = uniqueBooks;
-        // state.results = action.payload;
+        // const sameBook = new Set();
+        // const uniqueBooks = [];
+        // for (const book of action.payload) {
+        //   const key = `${book.title}-${book.author}`.toLowerCase();
+        //   if (!sameBook.has(key)) {
+        //     sameBook.add(key);
+        //     uniqueBooks.push(book);
+        //   }
+        // }
+        // state.results = uniqueBooks;
+        state.results = action.payload;
       })
 
       .addCase(deleteBook.fulfilled, (state, action) => {
@@ -53,12 +63,18 @@ const ownBooksSlice = createSlice({
       })
       .addCase(addRecommendedBook.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
-        const id = action.payload;
-        if (!state.results.includes(id)) {
-          state.results = [...state.results, id];
+        const book = action.payload;
+        const existingBook = state.results.some(
+          (b) =>
+            b.title.toLowerCase() === book.title.toLowerCase() &&
+            b.author.toLowerCase() === book.author.toLowerCase()
+        );
+        if (existingBook) {
+          state.error = "Book already exists";
+          return;
         } else {
-          state.results;
+          state.error = null;
+          state.results.push(book);
         }
       })
       .addCase(addRecommendedBook.rejected, (state, action) => {
@@ -92,4 +108,5 @@ const ownBooksSlice = createSlice({
   },
 });
 
+export const { setItemsPerPage, setPage } = ownBooksSlice.actions;
 export default ownBooksSlice.reducer;

@@ -1,14 +1,32 @@
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import css from "./Filters.module.css";
 import { ErrorMessage, Field, Formik, Form } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { recommendation } from "../../redux/recommendedBooks/operations";
+import { NotFoundModal } from "../NotFoundModal/NotFoundModal";
+import { selectItems } from "../../redux/recommendedBooks/selectors";
 
 export const Filters = () => {
+  const dispatch = useDispatch();
+  const recommended = useSelector(selectItems);
+
   const initialValues = {
     title: "",
     author: "",
   };
 
-  const handleSubmit = (values, actions) => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(8);
+  useEffect(() => {
+    setPage(1);
+    setPerPage(8);
+  }, [perPage]);
+
+  const handleSubmit = async (values, actions) => {
+    const { title, author } = values;
+
+    dispatch(recommendation({ title, author, page, perPage }));
+
     actions.resetForm();
   };
 
@@ -30,7 +48,6 @@ export const Filters = () => {
                 className={css.field}
                 id={bookFieldId}
                 placeholder="Enter text"
-                required
               />
               <ErrorMessage
                 name="title"
@@ -48,7 +65,6 @@ export const Filters = () => {
                 id={authorFieldId}
                 placeholder="Enter text"
                 autoComplete="off"
-                required
               />
               <ErrorMessage
                 name="author"

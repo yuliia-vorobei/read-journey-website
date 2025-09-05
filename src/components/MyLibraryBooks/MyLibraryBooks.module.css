@@ -4,7 +4,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   border-radius: 30px;
   background: var(--fifth-font-color);
 }
@@ -104,6 +103,34 @@
 
 .option {
   background-color: var(--fourth-font-color);
+}
+
+.iconsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.btnPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  outline: none;
+  padding: 0;
+  border: none;
+  border-radius: 100%;
+  border: 1px solid rgba(249, 249, 249, 0.2);
+  cursor: pointer;
+}
+
+.iconPage {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.5px;
+  stroke: var(--main-font-color);
+  fill: none;
 }
 
 .readingContainer {

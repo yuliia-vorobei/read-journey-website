@@ -29,13 +29,21 @@ export const addRecommendedBook = createAsyncThunk(
       const reduxState = thunkAPI.getState();
       const token = reduxState.auth.token;
       setAuthHeader(token);
-      await axios.post(`/books/add/${bookId}`);
-      return bookId;
+      const { data } = await axios.post(`/books/add/${bookId}`);
+      return data;
     } catch (error) {
       const status = error.response?.status;
       handleError(status);
       return thunkAPI.rejectWithValue(status);
     }
+  },
+  {
+    condition: (bookId, { getState }) => {
+      const { ownBooks } = getState();
+      console.log(ownBooks, "own");
+      const exists = ownBooks.results.some((b) => b._id === bookId);
+      return !exists;
+    },
   }
 );
 

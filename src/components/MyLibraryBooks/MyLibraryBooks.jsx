@@ -8,18 +8,60 @@ import { Loader } from "../Loader/Loader";
 import { BookModalComponent } from "../BookModalComponent/BookModalComponent";
 import { useNavigate } from "react-router-dom";
 import { getBookInfo } from "../../redux/startReadingBook/operations";
+import { setItemsPerPage } from "../../redux/ownBooks/ownBooksSlice";
 
 export const MyLibraryBooks = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [status, setStatus] = useState("all");
-
   const results = useSelector(selectResults);
+
+  const unique = (res) => {
+    const seen = new Set();
+    return res.filter((item) => {
+      if (seen.has(item.title)) return false;
+      seen.add(item.title);
+      return true;
+    });
+  };
+  const u = unique(results);
+
+  // const page = results.length;
+  // const [pageNumber, setPageNumber] = useState(1);
+  // const [bookNumber] = useState(6);
+  // const currentPageNumber = pageNumber * bookNumber - bookNumber;
+
+  // const handlePrev = () => {
+  //   if (pageNumber === 1) {
+  //     return setPageNumber(pageNumber - 1);
+  //   }
+  // };
+
+  // const handleNext = () => {
+  //   setPageNumber(pageNumber + 1);
+  // };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getOwnBooks({ status }));
   }, [dispatch, status]);
+
+  useEffect(() => {
+    const updatePerPage = () => {
+      if (window.innerWidth < 640) {
+        dispatch(setItemsPerPage(2));
+      } else if (window.innerWidth < 1024) {
+        dispatch(setItemsPerPage(8));
+      } else {
+        dispatch(setItemsPerPage(10));
+      }
+    };
+
+    updatePerPage();
+    window.addEventListener("resize", updatePerPage);
+    return () => window.removeEventListener("resize", updatePerPage);
+  }, [dispatch]);
 
   const startReading = async (book) => {
     await dispatch(getBookInfo(book._id));
@@ -64,6 +106,22 @@ export const MyLibraryBooks = () => {
             <Icon id="icon-chevron-down" className={css.icon} />
           </div>
         </div>
+        <div className={css.iconsContainer}>
+          <span className={css.btnPage}>
+            <Icon
+              id="icon-previous"
+              className={css.iconPage}
+              // onClick={handlePrev}
+            />
+          </span>
+          <span className={css.btnPage}>
+            <Icon
+              id="icon-next"
+              className={css.iconPage}
+              // onClick={handleNext}
+            />
+          </span>
+        </div>
       </div>
       {results.length === 0 ? (
         <div className={css.readingContainer}>
@@ -83,8 +141,9 @@ export const MyLibraryBooks = () => {
         </div>
       ) : (
         <ul className={css.list}>
-          {results.map((book) => {
+          {u.map((book) => {
             const { _id, imageUrl, title, author } = book;
+            // console.log(book);
             return (
               <li key={_id} className={css.item}>
                 {imageUrl === null ? (
@@ -119,7 +178,6 @@ export const MyLibraryBooks = () => {
               </li>
             );
           })}
-
           {selectedBook && (
             <BookModalComponent
               book={selectedBook}

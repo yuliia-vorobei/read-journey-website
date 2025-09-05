@@ -1,17 +1,17 @@
 import { OneBookComponent } from "../OneBookComponent/OneBookComponent";
 import { useDispatch, useSelector } from "react-redux";
 import css from "./RecommendedBooks.module.css";
-import { selectError } from "../../redux/recommendedBooks/selectors";
-import { Loader } from "../Loader/Loader";
+import { selectItems } from "../../redux/recommendedBooks/selectors";
 import { useEffect, useState } from "react";
 import { recommendation } from "../../redux/recommendedBooks/operations";
 import Icon from "../Icon/Icon";
+import { NotFoundModal } from "../NotFoundModal/NotFoundModal";
 
 export const RecommendedBooks = () => {
-  const error = useSelector(selectError);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const { totalPages } = useSelector((state) => state.recommendedBooks);
+  const recommended = useSelector(selectItems);
   const getInitialPerPage = () => {
     const width = window.innerWidth;
     if (width >= 1440) return 10;
@@ -20,6 +20,13 @@ export const RecommendedBooks = () => {
   };
 
   const [perPage, setPerPage] = useState(getInitialPerPage);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const openModal = () => {
+    if (recommended.length === 0) {
+      setIsOpenModal(true);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,7 +82,7 @@ export const RecommendedBooks = () => {
           )}
         </div>
       </div>
-      {error && <p>{error}</p>}
+      {isOpenModal && <NotFoundModal onClose={() => setIsOpenModal(false)} />}
       <OneBookComponent />
     </section>
   );
