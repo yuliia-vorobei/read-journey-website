@@ -11,7 +11,7 @@ import {
 import { selectBooks } from "../../redux/startReadingBook/selectors";
 
 const AddingPageSchema = Yup.object().shape({
-  page: Yup.number().required("Required").positive(),
+  page: Yup.number().required("Required").positive("Must be positive"),
 });
 
 export const AddReading = () => {
@@ -27,7 +27,7 @@ export const AddReading = () => {
 
   const initialValues = {
     id: _id || "",
-    page: 0,
+    page: "",
   };
 
   const handleSubmit = async (values, actions) => {
@@ -68,9 +68,9 @@ export const AddReading = () => {
               <Field
                 type="number"
                 name="page"
+                placeholder="1"
                 className={css.field}
                 id={pageFieldId}
-                placeholder="0"
                 required
               />
               <ErrorMessage

@@ -23,6 +23,7 @@
 @media screen and (min-width: 1440px) {
   .container {
     width: 847px;
+    min-height: 651px;
     padding-bottom: 53px;
   }
 }
