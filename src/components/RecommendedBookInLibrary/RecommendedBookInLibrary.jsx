@@ -19,6 +19,7 @@ export const RecommendedBookInLibrary = () => {
 
   useEffect(() => {
     setPage(1);
+    setPerPage(8);
   }, [perPage]);
 
   useEffect(() => {

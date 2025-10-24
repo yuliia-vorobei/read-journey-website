@@ -5,12 +5,15 @@ import { selectItems } from "../../redux/recommendedBooks/selectors";
 import { useEffect, useState } from "react";
 import { recommendation } from "../../redux/recommendedBooks/operations";
 import Icon from "../Icon/Icon";
-import { NotFoundModal } from "../NotFoundModal/NotFoundModal";
+import { PiSmileySadDuotone } from "react-icons/pi";
 
 export const RecommendedBooks = () => {
   const dispatch = useDispatch();
+
   const [page, setPage] = useState(1);
-  const { totalPages } = useSelector((state) => state.recommendedBooks);
+  const { totalPages, title, author } = useSelector(
+    (state) => state.recommendedBooks
+  );
   const recommended = useSelector(selectItems);
   const getInitialPerPage = () => {
     const width = window.innerWidth;
@@ -20,13 +23,6 @@ export const RecommendedBooks = () => {
   };
 
   const [perPage, setPerPage] = useState(getInitialPerPage);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const openModal = () => {
-    if (recommended.length === 0) {
-      setIsOpenModal(true);
-    }
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,8 +47,8 @@ export const RecommendedBooks = () => {
   }, [perPage]);
 
   useEffect(() => {
-    dispatch(recommendation({ page, perPage }));
-  }, [dispatch, page, perPage]);
+    dispatch(recommendation({ page, perPage, title, author }));
+  }, [dispatch, page, perPage, author, title]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -70,20 +66,34 @@ export const RecommendedBooks = () => {
       <div className={css.titleContainer}>
         <h2 className={css.title}>Recommended</h2>
         <div className={css.iconsContainer}>
-          {page > 1 && (
-            <span onClick={handlePreviousPage} className={css.btn}>
-              <Icon id="icon-previous" className={css.icon} />
+          {page > 1 ? (
+            <span onClick={handlePreviousPage} className={css.iconButton}>
+              <Icon id="icon-previous" className={css.iconPage} />
+            </span>
+          ) : (
+            <span onClick={handlePreviousPage} className={css.iconButton}>
+              <Icon id="icon-previous" className={css.iconPageDisabled} />
             </span>
           )}
-          {page < totalPages && (
-            <span onClick={handleNextPage} className={css.btn}>
-              <Icon id="icon-next" className={css.icon} />
+          {page < totalPages ? (
+            <span onClick={handleNextPage} className={css.iconButton}>
+              <Icon id="icon-next" className={css.iconPage} />
+            </span>
+          ) : (
+            <span onClick={handleNextPage} className={css.iconButton}>
+              <Icon id="icon-next" className={css.iconPageDisabled} />
             </span>
           )}
         </div>
       </div>
-      {isOpenModal && <NotFoundModal onClose={() => setIsOpenModal(false)} />}
-      <OneBookComponent />
+      {recommended.length === 0 ? (
+        <div className={css.notFoundContainer}>
+          <PiSmileySadDuotone />
+          <p className={css.titleNotFound}>Sorry, nothing was found!</p>
+        </div>
+      ) : (
+        <OneBookComponent />
+      )}
     </section>
   );
 };

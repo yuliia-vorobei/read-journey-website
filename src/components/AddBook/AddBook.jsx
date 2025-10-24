@@ -17,7 +17,6 @@ const initialValues = {
   author: "",
   totalPages: "",
 };
-
 export const AddBook = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 

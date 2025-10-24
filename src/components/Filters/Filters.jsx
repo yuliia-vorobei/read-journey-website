@@ -1,14 +1,11 @@
 import { useEffect, useId, useState } from "react";
 import css from "./Filters.module.css";
 import { ErrorMessage, Field, Formik, Form } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { recommendation } from "../../redux/recommendedBooks/operations";
-import { NotFoundModal } from "../NotFoundModal/NotFoundModal";
-import { selectItems } from "../../redux/recommendedBooks/selectors";
 
 export const Filters = () => {
   const dispatch = useDispatch();
-  const recommended = useSelector(selectItems);
 
   const initialValues = {
     title: "",
@@ -16,16 +13,31 @@ export const Filters = () => {
   };
 
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(2);
+
   useEffect(() => {
-    setPage(1);
-    setPerPage(8);
+    const updatePerPage = () => {
+      if (window.innerWidth < 768) {
+        setPage(1);
+        setPerPage(2);
+      } else if (window.innerWidth < 1024) {
+        setPerPage(8);
+      } else {
+        setPerPage(10);
+      }
+    };
+
+    updatePerPage();
+    window.addEventListener("resize", updatePerPage);
+    return () => window.removeEventListener("resize", updatePerPage);
   }, [perPage]);
 
   const handleSubmit = async (values, actions) => {
     const { title, author } = values;
 
-    dispatch(recommendation({ title, author, page, perPage }));
+    if (title || author) {
+      dispatch(recommendation({ title, author, page, perPage }));
+    }
 
     actions.resetForm();
   };
@@ -78,6 +90,7 @@ export const Filters = () => {
           </button>
         </Form>
       </Formik>
+      <div></div>
     </div>
   );
 };

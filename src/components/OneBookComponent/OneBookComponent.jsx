@@ -5,7 +5,7 @@ import { useState } from "react";
 import { BookModalComponent } from "../BookModalComponent/BookModalComponent";
 import { addRecommendedBook } from "../../redux/ownBooks/operations";
 import { AddedBookModal } from "../AddedBookModal/AddedBookModal";
-import { selectError, selectResults } from "../../redux/ownBooks/selectors";
+import { selectResults } from "../../redux/ownBooks/selectors";
 import { handleError } from "../../hooks/handleError";
 import { selectItems } from "../../redux/recommendedBooks/selectors";
 
@@ -13,7 +13,6 @@ export const OneBookComponent = () => {
   const results = useSelector(selectItems);
   const ownBookResults = useSelector(selectResults);
   const titles = ownBookResults.map((t) => t.title);
-  const error = useSelector(selectError);
 
   const dispatch = useDispatch();
 
@@ -21,16 +20,10 @@ export const OneBookComponent = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const addToLibrary = async (_id) => {
-    const existedBook = await dispatch(addRecommendedBook(_id));
-    if (!titles.includes(existedBook.payload.title)) {
+    if (selectedBook && !titles.includes(selectedBook.title)) {
+      await dispatch(addRecommendedBook(_id));
       setIsOpenModal(true);
     } else {
-      setIsOpenModal(false);
-    }
-    // if (addRecommendedBook.fulfilled.match(existedBook)) {
-    //   setIsOpenModal(true);
-    // }
-    if (error) {
       handleError(409);
       setIsOpenModal(false);
     }

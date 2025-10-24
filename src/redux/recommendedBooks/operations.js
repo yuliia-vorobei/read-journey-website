@@ -12,10 +12,11 @@ export const recommendation = createAsyncThunk(
     try {
       const reduxState = thunkAPI.getState();
       const token = reduxState.auth.token;
+
       setAuthHeader(token);
       const url =
         title || author
-          ? `/books/recommend?page=${page}&limit=${perPage}&title=${title}&author=${author}`
+          ? `/books/recommend?page=${page}&limit=${perPage}&title=${title.trim()}&author=${author.trim()}`
           : `/books/recommend?page=${page}&limit=${perPage}`;
 
       const { data } = await axios.get(url);

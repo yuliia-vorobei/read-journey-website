@@ -8,60 +8,67 @@ import { Loader } from "../Loader/Loader";
 import { BookModalComponent } from "../BookModalComponent/BookModalComponent";
 import { useNavigate } from "react-router-dom";
 import { getBookInfo } from "../../redux/startReadingBook/operations";
-import { setItemsPerPage } from "../../redux/ownBooks/ownBooksSlice";
 
 export const MyLibraryBooks = () => {
   const [selectedBook, setSelectedBook] = useState(null);
+  const [page, setPage] = useState(1);
   const [status, setStatus] = useState("all");
-  const results = useSelector(selectResults);
-
-  const unique = (res) => {
-    const seen = new Set();
-    return res.filter((item) => {
-      if (seen.has(item.title)) return false;
-      seen.add(item.title);
-      return true;
-    });
-  };
-  const u = unique(results);
-
-  // const page = results.length;
-  // const [pageNumber, setPageNumber] = useState(1);
-  // const [bookNumber] = useState(6);
-  // const currentPageNumber = pageNumber * bookNumber - bookNumber;
-
-  // const handlePrev = () => {
-  //   if (pageNumber === 1) {
-  //     return setPageNumber(pageNumber - 1);
-  //   }
-  // };
-
-  // const handleNext = () => {
-  //   setPageNumber(pageNumber + 1);
-  // };
-
+  const results = useSelector(selectResults) || [];
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getInitialPerPage = () => {
+    const width = window.innerWidth;
+    if (width >= 1440) return 10;
+    if (width >= 768) return 8;
+    return 2;
+  };
+
+  const [perPage, setPerPage] = useState(getInitialPerPage);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      if (width >= 1440) {
+        setPerPage(10);
+      } else if (width >= 768) {
+        setPerPage(8);
+      } else {
+        setPerPage(2);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [perPage, status]);
 
   useEffect(() => {
     dispatch(getOwnBooks({ status }));
   }, [dispatch, status]);
 
-  useEffect(() => {
-    const updatePerPage = () => {
-      if (window.innerWidth < 640) {
-        dispatch(setItemsPerPage(2));
-      } else if (window.innerWidth < 1024) {
-        dispatch(setItemsPerPage(8));
-      } else {
-        dispatch(setItemsPerPage(10));
-      }
-    };
+  const totalPages = Math.ceil(results.length / perPage);
 
-    updatePerPage();
-    window.addEventListener("resize", updatePerPage);
-    return () => window.removeEventListener("resize", updatePerPage);
-  }, [dispatch]);
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+  const start = (page - 1) * perPage;
+  const end = start + perPage;
+  const currentItems = results.slice(start, end);
 
   const startReading = async (book) => {
     await dispatch(getBookInfo(book._id));
@@ -77,50 +84,57 @@ export const MyLibraryBooks = () => {
   if (!results) {
     return <Loader />;
   }
+
   return (
     <div className={css.container}>
       <div className={css.wrapper}>
         <h2 className={css.title}>My library</h2>
-        <div className={css.selectWrapper}>
-          <label htmlFor={selectId} />
-          <div>
-            <select
-              className={css.select}
-              id={selectId}
-              value={status}
-              onChange={(evt) => setStatus(evt.target.value)}
-            >
-              <option value="unread" className={css.option}>
-                Unread
-              </option>
-              <option value="in-progress" className={css.option}>
-                In progress
-              </option>
-              <option value="done" className={css.option}>
-                Done
-              </option>
-              <option value="all" className={css.option}>
-                All books
-              </option>
-            </select>
-            <Icon id="icon-chevron-down" className={css.icon} />
+        <div className={css.filterContainer}>
+          <div className={css.selectWrapper}>
+            <label htmlFor={selectId} />
+            <div>
+              <select
+                className={css.select}
+                id={selectId}
+                value={status}
+                onChange={(evt) => setStatus(evt.target.value)}
+              >
+                <option value="unread" className={css.option}>
+                  Unread
+                </option>
+                <option value="in-progress" className={css.option}>
+                  In progress
+                </option>
+                <option value="done" className={css.option}>
+                  Done
+                </option>
+                <option value="all" className={css.option}>
+                  All books
+                </option>
+              </select>
+              <Icon id="icon-chevron-down" className={css.icon} />
+            </div>
           </div>
-        </div>
-        <div className={css.iconsContainer}>
-          <span className={css.btnPage}>
-            <Icon
-              id="icon-previous"
-              className={css.iconPage}
-              // onClick={handlePrev}
-            />
-          </span>
-          <span className={css.btnPage}>
-            <Icon
-              id="icon-next"
-              className={css.iconPage}
-              // onClick={handleNext}
-            />
-          </span>
+          <div className={css.iconsContainer}>
+            {page > 1 ? (
+              <span onClick={handlePreviousPage} className={css.iconButton}>
+                <Icon id="icon-previous" className={css.iconPage} />
+              </span>
+            ) : (
+              <span onClick={handlePreviousPage} className={css.iconButton}>
+                <Icon id="icon-previous" className={css.iconPageDisabled} />
+              </span>
+            )}
+            {page < totalPages ? (
+              <span onClick={handleNextPage} className={css.iconButton}>
+                <Icon id="icon-next" className={css.iconPage} />
+              </span>
+            ) : (
+              <span onClick={handleNextPage} className={css.iconButton}>
+                <Icon id="icon-next" className={css.iconPageDisabled} />
+              </span>
+            )}
+          </div>
         </div>
       </div>
       {results.length === 0 ? (
@@ -141,9 +155,8 @@ export const MyLibraryBooks = () => {
         </div>
       ) : (
         <ul className={css.list}>
-          {u.map((book) => {
+          {currentItems.map((book) => {
             const { _id, imageUrl, title, author } = book;
-            // console.log(book);
             return (
               <li key={_id} className={css.item}>
                 {imageUrl === null ? (

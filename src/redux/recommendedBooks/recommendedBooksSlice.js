@@ -8,6 +8,8 @@ const initialState = {
   totalPages: 0,
   isLoading: false,
   error: null,
+  title: "",
+  author: "",
 };
 
 const recommendedBooksSlice = createSlice({
@@ -31,11 +33,13 @@ const recommendedBooksSlice = createSlice({
       })
       .addCase(recommendation.fulfilled, (state, action) => {
         if (!state.loadMoreEnabled) return;
-
+        const { title, author } = action.meta.arg;
         state.results = action.payload.results;
         state.isLoading = false;
         state.error = null;
         state.totalPages = action.payload.totalPages;
+        state.title = title;
+        state.author = author;
       })
 
       .addCase(logout.fulfilled, () => {

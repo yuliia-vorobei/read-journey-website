@@ -40,7 +40,6 @@ export const addRecommendedBook = createAsyncThunk(
   {
     condition: (bookId, { getState }) => {
       const { ownBooks } = getState();
-      console.log(ownBooks, "own");
       const exists = ownBooks.results.some((b) => b._id === bookId);
       return !exists;
     },
