@@ -2,7 +2,7 @@
 
 # 📚 Read Journey
 
-Expand your mind — one book at a time
+Expand your mind — one book at a time.
 
 </div>
 
@@ -45,7 +45,7 @@ Built using modern web technologies and best practices:
 
 ## Installation
 
-1. **Clone the repository**
+1. **Clone the repository**.
 
    ```bash
    git clone https://github.com/yuliia-vorobei/read-journey-website.git
@@ -53,10 +53,10 @@ Built using modern web technologies and best practices:
 
    ```
 
-2. Install dependencies
+2. Install dependencies.
    npm i
 
-3. Run the project
+3. Run the project.
    npm run dev
 
 ## Live demo
@@ -66,4 +66,4 @@ https://read-journey-website.vercel.app/
 ## Author
 
 **Yuliia Vorobei**  
-[LinkedIn](https://www.linkedin.com/in/yuliia-vorobei-51ab66322/) • [GitHub](https://github.com/yuliia-vorobei)
+• [LinkedIn](https://www.linkedin.com/in/yuliia-vorobei-51ab66322/) • [GitHub](https://github.com/yuliia-vorobei)
