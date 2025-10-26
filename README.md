@@ -54,10 +54,18 @@ Built using modern web technologies and best practices:
    ```
 
 2. Install dependencies.
+
+   ```bash
    npm i
 
+   ```
+
 3. Run the project.
-   npm run dev
+
+   ```bash
+    npm run dev
+
+   ```
 
 ## Live demo
 
